@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1571873577 source:d:\utn fitness center\utn_fitness_center\main.cpp
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<conio.h>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"persona.h"
+	"socio.h"
+	"empleado.h"
+	"menus.h"
+
+1571873595 d:\utn fitness center\utn_fitness_center\persona.h
+
+1571873605 d:\utn fitness center\utn_fitness_center\socio.h
+
+1571873904 d:\utn fitness center\utn_fitness_center\empleado.h
+
+1571873546 d:\utn fitness center\utn_fitness_center\menus.h
+
