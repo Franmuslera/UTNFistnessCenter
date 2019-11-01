@@ -33,7 +33,9 @@
 		</Compiler>
 		<Unit filename="empleado.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menus.h" />
 		<Unit filename="persona.h" />
+		<Unit filename="rutina.h" />
 		<Unit filename="socio.h" />
 		<Extensions>
 			<code_completion />

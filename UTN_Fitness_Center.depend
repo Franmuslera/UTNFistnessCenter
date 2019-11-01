@@ -20,3 +20,27 @@
 
 1571873546 d:\utn fitness center\utn_fitness_center\menus.h
 
+1572533737 source:d:\utn fitness center\utn_fitness_center\utnfistnesscenter\main.cpp
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<conio.h>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"persona.h"
+	"socio.h"
+	"empleado.h"
+	"rutina.h"
+	"menus.h"
+
+1571938505 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\persona.h
+
+1571941919 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\socio.h
+
+1572537482 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\empleado.h
+
+1572532039 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\menus.h
+
+1572537254 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina.h
+

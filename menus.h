@@ -30,9 +30,23 @@
                         system("pause");
                         break;
                     case 3:
+                        int opcion_muestra;
                         system("cls");
-                        mostrar_todos_los_empleados();
-                        system("pause");
+                        cout << endl << "COMO DESEA VER TODOS LOS EMPLEADOS (1: MOSTRAR EMPLEADOS POR POSICION; 2: MOSTRAR EMPLEADOS POR NRO DE EMPLEADO): ";
+                        cin >> opcion_muestra;
+                        system("cls");
+                        switch(opcion_muestra){
+                            case 1:
+                                mostrar_todos_los_empleados();
+                                system("pause");
+                                break;
+                            case 2:
+                                mostrar_todos_los_empleados_x_nro_empleado();
+                                system("pause");
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     case 0:
                         estado = false;
@@ -123,5 +137,67 @@
         }
     }
 
+    void menu_rutina(){
+        int opcion, nroRutina, opcion_mostrar;
+        bool estado = true;
+
+        while(estado){
+
+            cout << "- - - - - - - MENU DE RUTINAS - - - - - - - -" << endl;
+            cout << "1) CREAR NUEVA RUTINA" << endl;
+            cout << "2) BAJA DE RUTINA" << endl;
+            cout << "3) BUSCAR RUTINA" << endl;
+            cout << "4) MOSTRAR RUTINAS" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            switch(opcion){
+                case 1:
+                    alta_rutina();
+                    system("pause");
+                    break;
+                case 2:
+                    system("cls");
+                    baja_logica_rutina();
+                    break;
+                case 3:
+                    system("cls");
+                    cout << "INGRESE EL NUMERO DE RUTINA QUE DESEA BUSCAR: ";
+                    cin >> nroRutina;
+                    buscar_rutina_x_codigo(nroRutina);
+                    break;
+                case 4:
+                    system("cls");
+                    cout << "COMO DESEA VER EL ORDEN DE LAS RUTINAS ( 1 - POR NUMERO DE RUTINA / 2 - POR NIVEL DE RUTINA / 3 - POR TIPO DE RUTINA): ";
+                    cin >> opcion_mostrar;
+                    system("cls");
+                    switch(opcion_mostrar){
+                        case 1:
+                            mostrar_rutinas_x_codigo();
+                            break;
+                        case 2:
+                            mostrar_rutinas_x_niveles();
+                            break;
+                        case 3:
+                            mostrar_rutinas_x_tipos();
+                            break;
+                        default:
+                            break;
+                    }
+                    cout << "presione una tecla para continuar";
+                    system("pause>nul");
+                    break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+            system("cls");
+        }
+    }
 
 #endif // MENUS_H_INCLUDED

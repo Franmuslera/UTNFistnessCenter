@@ -24,11 +24,8 @@ class Socio: public Persona{
         void cargar();
         bool grabarEnDisco();
         bool leerDeDisco(int);
-        int posicionDeSocioEnArchivo(int);
-        bool buscarDNI(long);
-        int cantidad_de_socios();
-        Socio(long, char*, char*, int,int,int,int,int,int,int, char, char*, char*, int, long);
-        Socio();
+        //Socio(long, char*, char*, int,int,int,int,int,int,int, char, char*, char*, int, long);
+        //Socio();
 
 };
 
@@ -80,13 +77,14 @@ class Socio: public Persona{
         return true;
     }
 
-
-    int Socio::posicionDeSocioEnArchivo(int nroS){
+/*
+    int posicionDeSocioEnArchivo(int nroS){
         FILE *p;
         p = fopen(FILE_SOCIOS, "rb");
         if(p==NULL) return false;
-        while(fread(this, sizeof(Socio), 1, p)){
-            if(this->nroSocio == nroS){
+        Socio reg;
+        while(fread(&reg, sizeof(Socio), 1, p)){
+            if( reg.getN == nroS){
                 int pos = (ftell(p)-sizeof(Socio))/sizeof(Socio);
                 fclose(p);
                 return pos;
@@ -96,7 +94,7 @@ class Socio: public Persona{
         return -1;
     }
 
-
+*/
     bool Socio::leerDeDisco(int pos){
         FILE *p;
         p = fopen(FILE_SOCIOS, "rb");
@@ -112,7 +110,7 @@ class Socio: public Persona{
     }
 
 
-    int Socio::cantidad_de_socios(){
+    int cantidad_de_socios(){
         FILE *p;
         int cant_socios;
         p = fopen(FILE_SOCIOS, "rb");
@@ -129,12 +127,13 @@ class Socio: public Persona{
     }
 
 
-    bool Socio::buscarDNI(long dni_buscado){
+    bool buscarDNI(long dni_buscado){
         FILE *p;
         p = fopen(FILE_SOCIOS, "rb");
         if(p==NULL) return false;
-        while(fread(this, sizeof(Socio), 1, p)){
-            if(this->dni == dni_buscado){
+        Socio reg;
+        while(fread(&reg, sizeof(Socio), 1, p)){
+            if(reg.getDni() == dni_buscado){
                 fclose(p);
                 return true;
             }
@@ -273,7 +272,7 @@ class Socio: public Persona{
         cout << "-------------------------------------------------------" << endl;
 
     }
-
+/*
     Socio::Socio (long dni_const=0, char *nombre_const="",char *apellido_const="",
                    int fechaNac_const_dia = 0, int fechaNac_const_mes = 0, int fechaNac_const_anio = 0,
                     int fechaInicio_const_dia = 0, int fechaInicio_const_mes = 0, int fechaInicio_const_anio = 0, int fechaInicio_const_hora = 0,
@@ -299,16 +298,16 @@ class Socio: public Persona{
 //Socio::~Socio(){
 //    cout << endl << "EL SOCIO SE ELIMINO CORRECTAMENTE" << endl;
 //}
-
+*/
     void alta_socio(){
-        Socio reg(0);
+        Socio reg;
         system("cls");
         reg.cargar();
     }
 
 
     void buscar_socio_por_nro(int nSocio){
-        Socio reg(0);
+        Socio reg;
         FILE *p;
         p = fopen(FILE_SOCIOS, "rb");
         if(p==NULL)return;
@@ -332,7 +331,7 @@ class Socio: public Persona{
             cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
             return;
         }
-        Socio reg(0);
+        Socio reg;
         fseek(p, 0, 0);
         while(fread(&reg, sizeof(Socio), 1, p)){
             reg.mostrar();

@@ -22,22 +22,9 @@ class Empleado :
         void setTipoDeEmpleado(char*);
         void mostrar();
         void cargar();
-        int cantidad_de_empleados();
-        Empleado empleado(int,float,char*);
-        Empleado empleado();
-        bool buscar_empleado_x_dni(int);
         bool grabarEnDisco();
     };
 
-    Empleado Empleado::empleado(int nEmpleado = 0 ,float sueldo_const = 0.0, char * tipoDeEmpleado=" "){
-        nroEmpleado = nEmpleado;
-        sueldo = sueldo_const;
-        strcpy(tipo_de_empleado, tipoDeEmpleado);
-    }
-
-    Empleado Empleado::empleado(){
-
-    }
 
     int Empleado::getNroEmpleado(){
         return nroEmpleado;
@@ -64,7 +51,7 @@ class Empleado :
     }
 
 
-    int Empleado::cantidad_de_empleados(){
+    int cantidad_de_empleados(){
         FILE *p;
         int cant_empleados;
         p = fopen(FILE_EMPLEADOS, "rb");
@@ -99,12 +86,13 @@ class Empleado :
     }
 
 
-    bool Empleado::buscar_empleado_x_dni(int dni_buscado){
+    bool buscar_empleado_x_dni(long dni_buscado){
         FILE *p;
         p  = fopen(FILE_EMPLEADOS, "rb");
         if(p == NULL)return false;
-        while(fread(this, sizeof(Empleado), 1, p)){
-            if(dni == dni_buscado){
+        Empleado reg;
+        while(fread(&reg, sizeof(Empleado), 1, p)){
+            if( reg.getDni() == dni_buscado){
                 fclose(p);
                 return true;
             }
@@ -273,69 +261,47 @@ class Empleado :
         }
         Empleado reg;
         cout << "EMPLEADOS: " << endl;
-        cout << "- - - - - - - - - - - - ADMINISTRATIVOS - - - - - - - - - - - - - - -" << endl;
+        cout << "______________________________________________________________________" << endl;
+        cout << "                      ADMINISTRATIVOS" << endl;
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            if(strcmp(reg.getTipoDeEmpleado(),ADMINISTRATIVO)){
+            if(strcmp(reg.getTipoDeEmpleado(),ADMINISTRATIVO)==0){
                 reg.mostrar();
             }
         }
-        cout << endl << "- - - - - - - - - - - - ENTRENADORES - - - - - - - - - - - - - - -" << endl;
+        fseek(p, 0, 0);
+        cout << "______________________________________________________________________" << endl;
+        cout << endl << "                      ENTRENADORES" << endl;
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            if(strcmp(reg.getTipoDeEmpleado(),ENTRENADOR)){
+            if(strcmp(reg.getTipoDeEmpleado(),ENTRENADOR)==0){
                 reg.mostrar();
             }
         }
-        cout << endl << "- - - - - - - - - - - - LIMPIEZA - - - - - - - - - - - - - - -" << endl;
+        fseek(p, 0, 0);
+        cout << "______________________________________________________________________" << endl;
+        cout << endl << "                      LIMPIEZA" << endl;
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            if(strcmp(reg.getTipoDeEmpleado(),LIMPIEZA)){
+            if(strcmp(reg.getTipoDeEmpleado(),LIMPIEZA)==0){
                 reg.mostrar();
             }
         }
     }
 
-    /*
-    void menu_empleados(){
-
-        int opcion, nroDni;
-        bool estado = true;
-
-        while(estado){
-            cout << "- - - - - - - MENU DE EMPLEADOS - - - - - - - -" << endl;
-            cout << "1) ALTA DE NUEVO EMPLEADO" << endl;
-            cout << "2) BUSCAR EMPLEADO POR DNI" << endl;
-            cout << "3) MOSTRAR TODOS LOS EMPLEADOS" << endl;
-            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
-            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
-            cout << "INGRESE UNA OPCION: ";
-            cin >> opcion;
-
-            switch(opcion){
-                case 1:
-                    system("cls");
-                    alta_empleado();
-                    system("pause");
-                    break;
-                case 2:
-                    system("cls");
-                    cout << "INGRESE EL DNI DEL EMPLEADO QUE DESEA BUSCAR: ";
-                    cin >> nroDni;
-                    buscar_empleado_x_dni(nroDni);
-                    system("pause");
-                    break;
-                case 3:
-                    system("cls");
-                    mostrar_todos_los_empleados();
-                    system("pause");
-                    break;
-                case 0:
-                    estado = false;
-                    break;
-                default:
-                    break;
-            }
-            system("cls");
+    void mostrar_todos_los_empleados_x_nro_empleado(){
+        FILE *p;
+        p = fopen(FILE_EMPLEADOS, "rb");
+        if(p==NULL){
+            cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
+            return;
         }
-    }*/
+        Empleado reg;
+        fseek(p, 0, 0);
+        while(fread(&reg, sizeof(Empleado), 1, p)){
+            reg.mostrar();
+            cout << endl;
+        }
+
+        fclose(p);
+    }
 
 
 #endif // EMPLEADO_H_INCLUDED
