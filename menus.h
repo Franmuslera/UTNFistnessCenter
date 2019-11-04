@@ -200,4 +200,44 @@
         }
     }
 
+      /*  void menu_reservas(){
+            int opcion;
+            bool en_curso = true;
+
+            while(en_curso){
+                cout << "- - - - - - - MENU DE RESERVAS - - - - - - - -" << endl;
+                cout << "1) CARGAR RESERVA" << endl;
+                cout << "2) BUSCAR RESERVA POR NUMERO DE SOCIO" << endl;
+                cout << "3) MOSTRAR TODAS LAS RESERVAS" << endl;
+                cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+                cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+                cout << "INGRESE UNA OPCION: ";
+                cin >> opcion;
+                system("cls");
+                switch(opcion){
+                    case 1:
+                        cargarReserva();
+                        system("pause");
+                        break;
+                    case 2:
+                       cout << "INGRSE NUMERO DE SOCIO: ";
+                        cin >> nroSocio;
+                        buscar_reserva_x_nroSocio(nroSocio);
+                        system("pause");
+                        break;
+                    case 3:
+                        mostrar_todas_las_reservas();
+                        system("pause");
+                        break;
+                    case 0:
+                        en_curso = false;
+                        break;
+                    default:
+                        break;
+                }
+
+                system("cls");
+        }
+    }*/
+
 #endif // MENUS_H_INCLUDED

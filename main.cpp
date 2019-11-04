@@ -10,6 +10,7 @@ using namespace std;
 #include "socio.h"
 #include "empleado.h"
 #include "rutina.h"
+#include "reservaDeCancha.h"
 
 #include "menus.h"
 
@@ -31,6 +32,7 @@ int main(){
             cout << "- - - - - - - MENU PRINCIPAL - - - - - - - -" << endl;
             cout << "1) GESTION SOCIOS Y EMPLEADOS" << endl;
             cout << "2) GESTION DE RUTINAS" << endl;
+            cout << "3) GESTION DE RESERVAS" << endl;
             cout << "0) CERRAR PROGRAMA" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -45,6 +47,9 @@ int main(){
                     system("cls");
                     menu_rutina();
                     break;
+                case 3:
+                    system("cls");
+                    //menu_reservas();
                 case 0:
                     estado = false;
                     break;
