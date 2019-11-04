@@ -36,6 +36,7 @@
 		<Unit filename="menus.h" />
 		<Unit filename="persona.h" />
 		<Unit filename="rutina.h" />
+		<Unit filename="rutina_por_cliente.h" />
 		<Unit filename="socio.h" />
 		<Extensions>
 			<code_completion />

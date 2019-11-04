@@ -142,6 +142,21 @@ class Socio: public Persona{
         return false;
     }
 
+    bool buscarSocioXNro(int nro){
+        FILE *p;
+        p = fopen(FILE_SOCIOS, "rb");
+        if(p==NULL)return false;
+        Socio reg;
+        while(fread(&reg, sizeof(Socio),1 ,p)){
+            if(reg.getNroSocio()==nro){
+                fclose(p);
+                return true;
+            }
+        }
+        fclose(p);
+        return false;
+    }
+
 
 
     void cargarCadena(char *pal, int tam){

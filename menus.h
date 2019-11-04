@@ -138,7 +138,7 @@
     }
 
     void menu_rutina(){
-        int opcion, nroRutina, opcion_mostrar;
+        int opcion, nroRutina, opcion_mostrar, opcion_asignacion;
         bool estado = true;
 
         while(estado){
@@ -148,6 +148,7 @@
             cout << "2) BAJA DE RUTINA" << endl;
             cout << "3) BUSCAR RUTINA" << endl;
             cout << "4) MOSTRAR RUTINAS" << endl;
+            cout << "5) ASIGNACION DE RUTINA A CLIENTE" << endl;
             cout << "0) VOLVER AL MENU ANTERIOR" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -188,6 +189,30 @@
                     }
                     cout << "presione una tecla para continuar";
                     system("pause>nul");
+                    break;
+                case 5:
+                    system("cls");
+                    cout << "- - - - - - - MENU DE ASIGNACION DE RUTINAS - - - - - - - -" << endl;
+                    cout << "1) ASIGNAR RUTINA A CLIENTE" << endl;
+                    cout << "2) BAJA DE ASIGNACION DE RUTINA" << endl;
+                    cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+                    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+                    cout << "INGRESE UNA OPCION: ";
+                    cin >> opcion_asignacion;
+                    switch(opcion_asignacion){
+                        case 1:
+                            system("cls");
+                            cargarRutinaXCliente();
+                            break;
+                        case 2:
+                            system("cls");
+                            bajaRutinaXCliente();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case 0:
                     estado = false;

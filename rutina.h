@@ -152,6 +152,7 @@ bool buscarRutina(int pos){
     Rutina reg;
     while(fread(&reg, sizeof(Rutina), 1, p)){
         if(reg.getCodigoRutina()==pos){
+            fclose(p);
             return true;
         }
     }
@@ -223,8 +224,8 @@ void mostrar_rutinas_x_niveles(){
     Rutina reg;
 
     fseek(p, 0, 0);
-    cout << "________________________________________________________________";
-    cout << "________________NIVEL 1 : PRINCIPIANTES________________" << endl;
+    cout << "________________________________________________________________" << endl;
+    cout << "                  NIVEL 1 : PRINCIPIANTES" << endl;
     while(fread(&reg, sizeof(Rutina), 1, p)){
         if(reg.getEstado() && strcmp(reg.getNivelRutina(), NIVEL_1)==0){
             reg.mostrarRutina();
@@ -232,8 +233,8 @@ void mostrar_rutinas_x_niveles(){
     }
 
     fseek(p, 0, 0);
-    cout << "________________________________________________________________";
-    cout << "________________NIVEL 2 : INTERMEDIO________________" << endl;
+    cout << "________________________________________________________________" << endl;
+    cout << "                  NIVEL 2 : INTERMEDIO" << endl;
     while(fread(&reg, sizeof(Rutina), 1, p)){
         if(reg.getEstado() && strcmp(reg.getNivelRutina(), NIVEL_2)==0){
             reg.mostrarRutina();
@@ -241,8 +242,8 @@ void mostrar_rutinas_x_niveles(){
     }
 
     fseek(p, 0, 0);
-    cout << "________________________________________________________________";
-    cout << "________________NIVEL 3 : AVANZADO________________" << endl;
+    cout << "________________________________________________________________" << endl;
+    cout << "                  NIVEL 3 : AVANZADO" << endl;
     while(fread(&reg, sizeof(Rutina), 1, p)){
         if(reg.getEstado() && strcmp(reg.getNivelRutina(), NIVEL_3)==0){
             reg.mostrarRutina();

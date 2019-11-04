@@ -10,7 +10,7 @@ using namespace std;
 #include "socio.h"
 #include "empleado.h"
 #include "rutina.h"
-#include "reservaDeCancha.h"
+#include "rutina_por_cliente.h"
 
 #include "menus.h"
 
