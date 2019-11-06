@@ -2,7 +2,7 @@
 #define CANCHA_H_INCLUDED
 
 
-const char FILE_CANCHAS = "canchas.dat";
+const char *FILE_CANCHAS = "canchas.dat";
 
 class Cancha{
  private:
@@ -10,9 +10,9 @@ class Cancha{
      char tipoCancha[30];
  public:
     int getNroCancha();
-    char getTipoCancha();
+    char* getTipoCancha();
     void setNroCancha(int);
-    void setTipoCancha(char);
+    void setTipoCancha(char*);
     Cancha(int,char*);
 };
 
@@ -20,21 +20,21 @@ int Cancha::getNroCancha(){
    return nroCancha;
    }
 
-char Cancha::getTipoCancha(){
+char* Cancha::getTipoCancha(){
    return tipoCancha;
    }
 
-void setNroCancha(int n){
+void Cancha::setNroCancha(int n){
     nroCancha = n;
     }
 
-void setTipoCancha(char* t){
-    tipoCancha = t;
+void Cancha::setTipoCancha(char* t){
+    strcpy(tipoCancha, t);
     }
 
-    Cancha::Cancha (int n, char* t_const=""){
+Cancha::Cancha (int n, char* t_const=""){
     nroCancha = n;
     strcpy(tipoCancha,t_const);
-    }
+}
 
 #endif // CANCHA_H_INCLUDED

@@ -63,7 +63,7 @@ int Rutina::leer_disco(int pos){
 		{
 		cout<<"No existe el archivo";
 		cout<<"Presione una tecla para continuar";
-    system("pause<null");
+        system("pause<null");
 		return 0;
 		}
 	fseek(p,pos*sizeof *this,0);

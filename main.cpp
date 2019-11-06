@@ -11,15 +11,10 @@ using namespace std;
 #include "empleado.h"
 #include "rutina.h"
 #include "rutina_por_cliente.h"
+#include "cancha.h"
+#include "reservaDeCancha.h"
 
 #include "menus.h"
-
-/*struct Fecha{
-    int anio;
-    int mes;
-    int dia;
-    int hora;
-}; */
 
 
 
@@ -47,9 +42,10 @@ int main(){
                     system("cls");
                     menu_rutina();
                     break;
+
                 case 3:
                     system("cls");
-                    //menu_reservas();
+                    menu_reservas();
                 case 0:
                     estado = false;
                     break;

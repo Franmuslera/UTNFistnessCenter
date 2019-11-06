@@ -31,10 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cancha.h" />
 		<Unit filename="empleado.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menus.h" />
 		<Unit filename="persona.h" />
+		<Unit filename="reservaDeCancha.h" />
 		<Unit filename="rutina.h" />
 		<Unit filename="rutina_por_cliente.h" />
 		<Unit filename="socio.h" />

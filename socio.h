@@ -24,8 +24,6 @@ class Socio: public Persona{
         void cargar();
         bool grabarEnDisco();
         bool leerDeDisco(int);
-        //Socio(long, char*, char*, int,int,int,int,int,int,int, char, char*, char*, int, long);
-        //Socio();
 
 };
 
@@ -77,24 +75,6 @@ class Socio: public Persona{
         return true;
     }
 
-/*
-    int posicionDeSocioEnArchivo(int nroS){
-        FILE *p;
-        p = fopen(FILE_SOCIOS, "rb");
-        if(p==NULL) return false;
-        Socio reg;
-        while(fread(&reg, sizeof(Socio), 1, p)){
-            if( reg.getN == nroS){
-                int pos = (ftell(p)-sizeof(Socio))/sizeof(Socio);
-                fclose(p);
-                return pos;
-            }
-        };
-        fclose(p);
-        return -1;
-    }
-
-*/
     bool Socio::leerDeDisco(int pos){
         FILE *p;
         p = fopen(FILE_SOCIOS, "rb");
@@ -265,9 +245,6 @@ class Socio: public Persona{
 
         setNroSocio(cantidad_de_socios()+1);
 
-        //Socio reg(dni, nombre, apellido, fecha_de_nacimiento.dia, fecha_de_nacimiento.mes, fecha_de_nacimiento.anio,
-         //         fecha_de_inicio.dia,fecha_de_inicio.mes,fecha_de_inicio.anio,fecha_de_inicio.hora, sexo, email, direccion, nroSocio, telefono);
-
         grabarEnDisco();
 
         cout << "SU NUMERO DE SOCIO ES " << nroSocio << endl;
@@ -287,33 +264,7 @@ class Socio: public Persona{
         cout << "-------------------------------------------------------" << endl;
 
     }
-/*
-    Socio::Socio (long dni_const=0, char *nombre_const="",char *apellido_const="",
-                   int fechaNac_const_dia = 0, int fechaNac_const_mes = 0, int fechaNac_const_anio = 0,
-                    int fechaInicio_const_dia = 0, int fechaInicio_const_mes = 0, int fechaInicio_const_anio = 0, int fechaInicio_const_hora = 0,
-                     char sex='M',char *mail_const="", char *direccion_const="", int nroSocio_const=0, long telefono_const=0)
-                     {
-        dni = dni_const;
-        strcpy(nombre, nombre_const);
-        strcpy(apellido, apellido_const);
-        strcpy(email, mail_const);
-        strcpy(direccion, direccion_const);
-        fecha_de_nacimiento.dia = fechaNac_const_dia;
-        fecha_de_nacimiento.mes = fechaNac_const_mes;
-        fecha_de_nacimiento.anio = fechaNac_const_anio;
-        fecha_de_inicio.dia = fechaInicio_const_dia;
-        fecha_de_inicio.mes = fechaInicio_const_mes;
-        fecha_de_inicio.anio = fechaInicio_const_anio;
-        fecha_de_inicio.hora = fechaInicio_const_hora;
-        sexo = sex;
-        nroSocio = nroSocio_const;
-        telefono = telefono_const;
-    }
 
-//Socio::~Socio(){
-//    cout << endl << "EL SOCIO SE ELIMINO CORRECTAMENTE" << endl;
-//}
-*/
     void alta_socio(){
         Socio reg;
         system("cls");
@@ -356,48 +307,6 @@ class Socio: public Persona{
         fclose(p);
     }
 
-    /*
-    void menu_socios(){
-        int opcion, nroSoc;
-        bool en_curso = true;
-
-        while(en_curso){
-            cout << "- - - - - - - MENU DE SOCIOS - - - - - - - -" << endl;
-            cout << "1) INSCRIPCION DE NUEVO SOCIO" << endl;
-            cout << "2) BUSCAR SOCIO POR SU NUMERO DE SOCIO" << endl;
-            cout << "3) MOSTRAR TODOS LOS SOCIOS" << endl;
-            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
-            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
-            cout << "INGRESE UNA OPCION: ";
-            cin >> opcion;
-
-            switch(opcion){
-                case 1:
-                    alta_socio();
-                    system("pause");
-                    break;
-                case 2:
-                    system("cls");
-                    cout << "INGRESE EL NUMERO DEL SOCIO QUE DESEA BUSCAR: ";
-                    cin >> nroSoc;
-                    buscar_socio_por_nro(nroSoc);
-                    system("pause");
-                    break;
-                case 3:
-                    system("cls");
-                    mostrar_todos_los_socios();
-                    system("pause");
-                    break;
-                case 0:
-                    en_curso = false;
-                    break;
-                default:
-                    break;
-            }
-
-            system("cls");
-        }
-    } */
 
 
 
