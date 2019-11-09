@@ -101,39 +101,4 @@ class Persona {
         cout << fecha_de_inicio.dia << "/" << fecha_de_inicio.mes << "/" << fecha_de_inicio.anio;
     }
 
-   /* void menu_personas(){
-        bool estado = true;
-        int opcion;
-
-        while(estado){
-
-            cout << "- - - - - - - MENU GESTION SOCIOS Y EMPLEADOS - - - - - - - -" << endl;
-            cout << "1) GESTION DE SOCIOS" << endl;
-            cout << "2) GESTION DE EMPLEADOS" << endl;
-            cout << "0) CERRAR PROGRAMA" << endl;
-            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
-            cout << "INGRESE UNA OPCION: ";
-            cin >> opcion;
-
-            switch(opcion){
-                case 1:
-                    system("cls");
-                    menu_socios();
-                    break;
-                case 2:
-                    system("cls");
-                    menu_empleados();
-                    break;
-                case 0:
-                    estado = false;
-                    break;
-                    default:
-                    break;
-            }
-
-            system("cls");
-
-        }
-    }*/
-
 #endif // PERSONA_H_INCLUDED

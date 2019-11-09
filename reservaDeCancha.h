@@ -4,15 +4,20 @@
 const char *FILE_RESERVAS = "reservas.dat";
 
 
+void modificar_fecha_reserva();
+void modificar_cancha_reserva();
+void modificar_duracion_reserva();
 void mostrar_todas_las_reservas_x_nro_reserva();
 void mostrar_todas_las_reservas();
 void buscar_reservas_x_nroSocio(int);
-void buscar_reserva_x_nroReserva(int);
+bool buscar_reserva_x_nroReserva(int);
+bool existe_reserva(int);
 int cantidad_de_reservas();
 void buscar_reserva_x_cancha(int);
 bool buscarReserva(int,int,int,int,int);
-void dia_actual();
+Fecha dia_actual();
 void alta_reserva();
+void baja_reserva();
 
 class Reserva {
   private:
@@ -103,7 +108,7 @@ int Reserva::leerDeDisco(int pos){
 		{
 		cout<<"No existe el archivo";
 		cout<<"Presione una tecla para continuar";
-    system("pause");
+        system("pause");
 		return 0;
 		}
 	fseek(p,pos*sizeof *this,0);
@@ -148,11 +153,11 @@ bool buscarReserva(int pos,int anio, int dia,int mes,int hora){
     p = fopen(FILE_RESERVAS, "rb");
     if(p==NULL)return false;
     long suma_reserva, suma_reserva_activa;
-    suma_reserva = (anio*1000000) + (mes*10000) + (dia*100) + hora;
+    suma_reserva = hora + (dia*100) + (mes*10000) + (anio*1000000);
     while(fread(&reg, sizeof(Reserva), 1, p)){
-        suma_reserva_activa = (reg.getHoraReserva().anio*1000000) + (reg.getHoraReserva().mes*10000) + (reg.getHoraReserva().dia*100) + reg.getHoraReserva().hora;
-        if(suma_reserva <= suma_reserva_activa && reg.getNroCancha() == pos && reg.getEstado()==true){
-            cout << "LA CANCHA " << pos << " YA HA SIDO RESERVADA DE "<< reg.getHoraReserva().hora << " HASTA " << reg.getHoraReserva().hora+reg.getDuracion();
+        suma_reserva_activa = reg.getHoraReserva().hora + (reg.getHoraReserva().dia*100) + (reg.getHoraReserva().mes*10000) + (reg.getHoraReserva().anio*1000000);
+        if(suma_reserva == suma_reserva_activa && reg.getNroCancha() == pos && reg.getEstado()==true){
+            cout << "LA CANCHA " << pos << " YA HA SIDO RESERVADA DE "<< reg.getHoraReserva().hora << "HS HASTA " << reg.getHoraReserva().hora+reg.getDuracion() << " HS" << endl;
             return true;
         }
     }
@@ -168,12 +173,12 @@ void buscar_reservas_x_nroSocio(int nro){
         cout << "NO SE PUDO ABRIR EL ARCHIVO";
         cout<<"Presione una tecla para continuar";
         system("pause<null");
-
+        return;
     }
     Reserva reg;
     int reservas = 0;
     while(fread(&reg, sizeof(Reserva), 1, p)){
-        if(reg.getNroSocio()==nro && reg.getEstado()==true){
+        if(reg.getNroSocio()==nro && reg.getEstado()==true && es_mayor_o_igual_a_la_fecha_actual(reg.getHoraReserva())){
             reg.mostrarReserva();
             reservas++;
         }
@@ -195,6 +200,7 @@ void buscar_reservas_x_nroSocio(int nro){
 void Reserva::cargarReserva(){
 
     int cant_reservas;
+    long fecha_hoy, fecha_ingresada;
 
     time_t t = time(NULL);
     struct tm today = *localtime(&t);
@@ -202,6 +208,8 @@ void Reserva::cargarReserva(){
     fecha_actual.dia = today.tm_mday;
     fecha_actual.anio = (today.tm_year + 1900);
     fecha_actual.hora = today.tm_hour;
+
+    fecha_hoy = (fecha_actual.anio*1000000) + (fecha_actual.mes*10000) + (fecha_actual.dia*100) + fecha_actual.hora;
 
     cout << "INGRESE EL NUMERO DE CANCHA QUE DESEA RESERVAR(1-5 FUTBOL 6-10 TENNIS):";
     cin >> numero_cancha;
@@ -219,13 +227,13 @@ void Reserva::cargarReserva(){
     cout << "INGRESE FECHA Y HORA DE RESERVA: "<< endl;
     cout << "DIA: ";
     cin >> horaReserva.dia;
-    while(horaReserva.dia < 1 && horaReserva.dia > 31){
+    while(horaReserva.dia < 1 || horaReserva.dia > 31){
         cout << "INGRESE UN DIA VALIDO (1-31): ";
         cin >> horaReserva.dia;
     }
     cout << "MES: ";
     cin >> horaReserva.mes;
-    while(horaReserva.mes < 1 && horaReserva.mes > 12){
+    while(horaReserva.mes < 1 || horaReserva.mes > 12){
         cout << "INGRESE UN MES VALIDO (1-12): ";
         cin >> horaReserva.mes;
     }
@@ -238,14 +246,49 @@ void Reserva::cargarReserva(){
     }
         cout << "HORA: ";
     cin >> horaReserva.hora;
-    while(horaReserva.hora < 9 && horaReserva.hora > 21){
+    while(horaReserva.hora < 9 || horaReserva.hora > 21){
         cout << "INGRESE UNA HORA VALIDA (9-21): ";
         cin >> horaReserva.hora;
     }
 
-    while(buscarReserva(numero_cancha,horaReserva.anio,horaReserva.dia,horaReserva.mes,horaReserva.hora)){
-        cout << "INGRESE OTRA HORA DE RESERVA: ";
+    while(!es_mayor_o_igual_a_la_fecha_actual(horaReserva)){
+
+        cout << endl << "LA FECHA INGRESADA ES MENOR QUE LA DEL SISTEMA; INGRESE UNA FECHA VALIDA PARA LA RESERVA: " << endl;
+
+        cout << "INGRESE FECHA Y HORA DE RESERVA: "<< endl;
+
+        cout << "DIA: ";
+        cin >> horaReserva.dia;
+        while(horaReserva.dia < 1 || horaReserva.dia > 31){
+            cout << "INGRESE UN DIA VALIDO (1-31): ";
+            cin >> horaReserva.dia;
+        }
+
+        cout << "MES: ";
+        cin >> horaReserva.mes;
+        while(horaReserva.mes < 1 || horaReserva.mes > 12){
+            cout << "INGRESE UN MES VALIDO (1-12): ";
+            cin >> horaReserva.mes;
+        }
+
+        cout << "ANIO: ";
+        cin >> horaReserva.anio;
+
+        while(horaReserva.anio < fecha_actual.anio){
+            cout << "INGRESE UN ANIO VALIDO MAYOR O IGUAL A " << fecha_actual.anio <<" : ";
+            cin >> horaReserva.anio;
+        }
+
+            cout << "HORA: ";
         cin >> horaReserva.hora;
+        while(horaReserva.hora < 9 || horaReserva.hora > 21){
+            cout << "INGRESE UNA HORA VALIDA (9-21): ";
+            cin >> horaReserva.hora;
+        }
+    }
+
+    while(buscarReserva(numero_cancha,horaReserva.anio,horaReserva.dia,horaReserva.mes,horaReserva.hora)){
+        return;
     }
 
     cout << "INGRESE DURACION DE RESERVA EN HORAS: ";
@@ -283,8 +326,14 @@ void mostrar_todas_las_reservas_x_nro_reserva(){
     }
     Reserva reg;
     fseek(p, 0, 0);
+
+    long fecha_reserva, fecha_sistema;
+
+    fecha_sistema = (dia_actual().anio*10000) + (dia_actual().mes*100) + dia_actual().dia;
+
     while(fread(&reg, sizeof(Reserva), 1, p)){
-        if(reg.getEstado()==true){
+        fecha_reserva = (reg.getHoraReserva().anio*10000) + (reg.getHoraReserva().mes*100) + reg.getHoraReserva().dia;
+        if(reg.getEstado()==true && fecha_sistema <= fecha_reserva){
             reg.mostrarReserva();
             cout << endl;
         }
@@ -292,59 +341,47 @@ void mostrar_todas_las_reservas_x_nro_reserva(){
     fclose(p);
 }
 
-void dia_actual(){
+Fecha dia_actual(){
 
     time_t t = time(NULL);
     struct tm today = *localtime(&t);
 
-    int anio, mes, dia;
+    Fecha fActual;
 
-    mes = today.tm_mon + 1;
-    dia = today.tm_mday;
-    anio = (today.tm_year + 1900);
+    fActual.mes = today.tm_mon + 1;
+    fActual.dia = today.tm_mday;
+    fActual.anio = (today.tm_year + 1900);
+    fActual.hora = today.tm_hour;
 
-    cout << dia << "/" << mes << "/" << anio;
-
+    return fActual;
 }
 
 void buscar_reserva_x_cancha(int nCancha){
     FILE *p;
-    p == fopen(FILE_RESERVAS, "rb");
+    p = fopen(FILE_RESERVAS, "rb");
     if(p==NULL){
         cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
         return;
     }
     Reserva reg;
 
-    time_t t = time(NULL);
-    struct tm today = *localtime(&t);
-
-    int anio, mes, dia, hora;
-
-    mes = today.tm_mon + 1;
-    dia = today.tm_mday;
-    anio = (today.tm_year + 1900);
-    hora = today.tm_hour;
-
-    long dia_actual, dia_reserva;
+    long dia_sistema, dia_reserva;
     int lista_horarios[12]={0};
     int hora_reserva;
-    dia_actual = (anio*10000) + (mes*100) + dia;
+    dia_sistema = (dia_actual().anio*10000) + (dia_actual().mes*100) + dia_actual().dia;
 
-    fseek(p, 0, 0);
     cout << endl << "CANCHA NUMERO " << nCancha << ": " << endl;
     while(fread(&reg, sizeof(Reserva),1, p)){
         dia_reserva = (reg.getHoraReserva().anio*10000) + (reg.getHoraReserva().mes*100) + reg.getHoraReserva().dia;
-        if(dia_reserva == dia_actual && reg.getEstado()==true && reg.getNroCancha()==nCancha){
+        if(dia_reserva == dia_sistema && reg.getEstado()==true && reg.getNroCancha()==nCancha){
             hora_reserva = reg.getHoraReserva().hora;
-            lista_horarios[hora_reserva]=1;
-            for(int i = 1; i <= reg.getDuracion(); i++){
+            for(int i = 0; i < reg.getDuracion(); i++){
                 lista_horarios[(hora_reserva-9)+i]=1;
             }
         }
-    }
+   }
 
-    for(int t = 0; t < 12; t++){
+    for(int t = 0; t < 13; t++){
         cout << (t+9) << ":00 ESTADO: ";
         if(lista_horarios[t]==1){
             cout << "RESERVADO" << endl;
@@ -360,9 +397,7 @@ void buscar_reserva_x_cancha(int nCancha){
 
 void mostrar_todas_las_reservas(){
 
-    cout << "RESERVAS DEL DIA ";
-    dia_actual();
-    cout << " : " << endl;
+    cout << "RESERVAS DEL DIA " << dia_actual().dia << "/" << dia_actual().mes << "/" << dia_actual().anio << " : " << endl;
 
     for(int j = 1; j <= 10; j++){
         buscar_reserva_x_cancha(j);
@@ -395,21 +430,250 @@ int cantidad_de_reservas(){
 
 }
 
-void buscar_reserva_x_nroReserva(int nReserva){
+bool buscar_reserva_x_nroReserva(int nReserva){
     FILE *p;
     p = fopen(FILE_RESERVAS, "rb");
-    if(p==NULL){cout << "NO SE PUDO ABRIR EL ARCHIVO" << endl; return;};
+    if(p==NULL){cout << "NO SE PUDO ABRIR EL ARCHIVO" << endl; return false;};
     Reserva reg;
+    long fecha_actual, fecha_reserva;
+    fecha_actual = dia_actual().hora + (dia_actual().dia*100) + (dia_actual().mes*10000) + (dia_actual().anio*1000000);
     while(fread(&reg, sizeof(Reserva), 1, p)){
-        if(reg.getNumeroReserva()==nReserva){
+        fecha_reserva = reg.getHoraReserva().hora + (reg.getHoraReserva().dia*100) + (reg.getHoraReserva().mes*10000) + (reg.getHoraReserva().anio*1000000);
+        if(reg.getNumeroReserva()==nReserva && reg.getEstado()==true && fecha_actual <= fecha_reserva){
             reg.mostrarReserva();
             fclose(p);
-            return;
+            return true;
         }
     }
     fclose(p);
     cout << endl << "NO HAY NINGUNA RESERVA CON ESE NUMERO" << endl;
+    return false;
 }
 
+void baja_reserva(){
+
+    int nReserva;
+    char opcion;
+    Reserva reg;
+
+    cout << "INGRESE EL NUMERO DE RESERVA QUE DESEA ELIMINAR: ";
+    cin >> nReserva;
+
+    if(buscar_reserva_x_nroReserva(nReserva)){
+        reg.leerDeDisco(nReserva -1);
+        cout << "SEGURO QUE DESEA ELIMINAR LA RESERVA (S/N): ";
+        cin >> opcion;
+        switch(opcion){
+            case 'S':
+            case 's':
+                reg.setEstado(false);
+                reg.modificar_en_disco(nReserva -1);
+                cout << "RESERVA DADA DE BAJA CORRECTAMENTE" << endl;
+                break;
+            case 'N':
+            case 'n':
+                cout << endl << "LA BAJA DE RESERVA ABORTADA" << endl;
+                break;
+            default:
+                break;
+        }
+    }
+
+    cout << "presione una tecla para continuar";
+    system("pause>nul");
+}
+
+
+void modificar_fecha_reserva(){
+    int nReserva;
+    Fecha fNueva;
+    char opcion;
+    Reserva reg;
+
+    cout << "INGRESE EL NUMERO DE LA RESERVA QUE DESEA MODIFICAR: ";
+    cin >> nReserva;
+    if(buscar_reserva_x_nroReserva(nReserva)){
+        reg.leerDeDisco(nReserva -1);
+        cout << endl << "SEGURO QUE DESEA MODIFICARLA (S/N): ";
+        cin >> opcion;
+        switch(opcion){
+            case 'S':
+            case 's':
+                cout << endl << "INGRESE LOS DATOS DE SU FECHA DE RESERVA: ";
+                cout << "DIA: ";
+                cin >> fNueva.dia;
+                while(fNueva.dia < 1 || fNueva.dia > 31){
+                    cout << "INGRESE UN DIA VALIDO (1-31): ";
+                    cin >> fNueva.dia;
+                }
+
+                cout << "MES: ";
+                cin >> fNueva.mes;
+                while(fNueva.mes < 1 || fNueva.mes > 12){
+                    cout << "INGRESE UN MES VALIDO (1-12): ";
+                    cin >> fNueva.mes;
+                }
+
+                cout << "ANIO: ";
+                cin >> fNueva.anio;
+
+                while(fNueva.anio < dia_actual().anio){
+                    cout << "INGRESE UN ANIO VALIDO MAYOR O IGUAL A "; cout << dia_actual().anio; cout <<" : ";
+                    cin >> fNueva.anio;
+                }
+
+                    cout << "HORA: ";
+                cin >> fNueva.hora;
+                while(fNueva.hora < 9 || fNueva.hora > 21){
+                    cout << "INGRESE UNA HORA VALIDA (9-21): ";
+                    cin >> fNueva.hora;
+                }
+
+                while(!es_mayor_o_igual_a_la_fecha_actual(fNueva)){
+
+                    cout << endl << "LA FECHA INGRESADA ES MENOR QUE LA DEL SISTEMA; INGRESE UNA FECHA VALIDA PARA LA RESERVA: " << endl;
+
+                    cout << "INGRESE FECHA Y HORA DE RESERVA: "<< endl;
+
+                    cout << "DIA: ";
+                    cin >> fNueva.dia;
+                    while(fNueva.dia < 1 || fNueva.dia > 31){
+                        cout << "INGRESE UN DIA VALIDO (1-31): ";
+                        cin >> fNueva.dia;
+                    }
+
+                    cout << "MES: ";
+                    cin >> fNueva.mes;
+                    while(fNueva.mes < 1 || fNueva.mes > 12){
+                        cout << "INGRESE UN MES VALIDO (1-12): ";
+                        cin >> fNueva.mes;
+                    }
+
+                    cout << "ANIO: ";
+                    cin >> fNueva.anio;
+
+                    while(fNueva.anio < dia_actual().anio){
+                        cout << "INGRESE UN ANIO VALIDO MAYOR O IGUAL A "; cout << dia_actual().anio; cout <<" : ";
+                        cin >> fNueva.anio;
+                    }
+
+                        cout << "HORA: ";
+                    cin >> fNueva.hora;
+                    while(fNueva.hora < 9 || fNueva.hora > 21){
+                        cout << "INGRESE UNA HORA VALIDA (9-21): ";
+                        cin >> fNueva.hora;
+                    }
+                }
+
+                while(buscarReserva(reg.getNroCancha(),fNueva.anio,fNueva.dia,fNueva.mes,fNueva.hora)){
+                    return;
+                }
+
+                reg.setHoraReserva(fNueva);
+                reg.modificar_en_disco(nReserva -1);
+                cout << endl << "LA RESERVA SE MODIFICO CORRECTAMENTE" << endl;
+                break;
+            case 'N':
+            case 'n':
+                cout << endl << "EDICION DE RESERVA ABORTADA" << endl;
+                break;
+            default:
+                break;
+        }
+    } else {
+        cout << "NO EXISTE UNA RESERVA CON ESE NUMERO" << endl;
+    }
+
+    cout << "presione una tecla para continuar";
+    system("pause>nul");
+}
+
+void modificar_cancha_reserva(){
+    int nReserva;
+    int nCancha;
+    char opcion;
+    Reserva reg;
+
+    cout << "INGRESE EL NUMERO DE RESERVA QUE DESEA MODIFICAR: ";
+    cin >> nReserva;
+
+    if(buscar_reserva_x_nroReserva(nReserva)){
+        reg.leerDeDisco(nReserva -1);
+
+        cout << endl << "INGRESE EL NUEVO NUMERO DE CANCHA: ";
+        cin >> nCancha;
+        while(nCancha < 1 || nCancha > 10){
+            cout << "NUMERO DE CANCHA INVALIDO (1-5 FUTBOL 6-10 TENNIS): ";
+            cout << endl << "INGRESE EL NUEVO NUMERO DE CANCHA: ";
+            cin >> nCancha;
+        }
+
+        if(buscarReserva(nCancha, reg.getHoraReserva().anio, reg.getHoraReserva().dia, reg.getHoraReserva().mes, reg.getHoraReserva().hora)){
+            return;
+        }
+
+        cout << "SEGURO QUE DESEA EDITAR LA RESERVA (S/N): ";
+        cin >> opcion;
+        switch(opcion){
+            case 'S':
+            case 's':
+                reg.setNroCancha(nCancha);
+                reg.modificar_en_disco(nReserva -1);
+                cout << "RESERVA MODIFICADA CORRECTAMENTE" << endl;
+                break;
+            case 'N':
+            case 'n':
+                cout << endl << "EDICION DE RESERVA ABORTADA" << endl;
+                break;
+            default:
+                break;
+        }
+    }
+
+    cout << "presione una tecla para continuar";
+    system("pause>nul");
+}
+
+void modificar_duracion_reserva(){
+    int nReserva;
+    int duracion;
+    char opcion;
+    Reserva reg;
+
+    cout << "INGRESE EL NUMERO DE RESERVA QUE DESEA MODIFICAR: ";
+    cin >> nReserva;
+
+    if(buscar_reserva_x_nroReserva(nReserva)){
+        reg.leerDeDisco(nReserva -1);
+
+        cout << endl << "INGRESE LA NUEVA DURACION EN HORAS DE LA RESERVA: ";
+        cin >> duracion;
+        while((duracion + reg.getHoraReserva().hora)>21){
+            cout << "LA DURACION DE LA RESERVA EXCEDE EL HORARIO DE CIERRE" << endl;
+            cout << "INGRESE UNA DURACION EN HORAS VALIDA: ";
+            cin >> duracion;
+        }
+
+        cout << "SEGURO QUE DESEA EDITAR LA RESERVA (S/N): ";
+        cin >> opcion;
+        switch(opcion){
+            case 'S':
+            case 's':
+                reg.setDuracion(duracion);
+                reg.modificar_en_disco(nReserva -1);
+                cout << "RESERVA MODIFICADA CORRECTAMENTE" << endl;
+                break;
+            case 'N':
+            case 'n':
+                cout << endl << "EDICION DE RESERVA ABORTADA" << endl;
+                break;
+            default:
+                break;
+        }
+    }
+
+    cout << "presione una tecla para continuar";
+    system("pause>nul");
+}
 
 #endif // RESERVADECANCHA_H_INCLUDED

@@ -13,7 +13,7 @@ class Cancha{
     char* getTipoCancha();
     void setNroCancha(int);
     void setTipoCancha(char*);
-    Cancha(int,char*);
+    Cancha(int,const char*);
 };
 
 int Cancha::getNroCancha(){
@@ -32,7 +32,7 @@ void Cancha::setTipoCancha(char* t){
     strcpy(tipoCancha, t);
     }
 
-Cancha::Cancha (int n, char* t_const=""){
+Cancha::Cancha (int n,const char* t_const=""){
     nroCancha = n;
     strcpy(tipoCancha,t_const);
 }

@@ -16,11 +16,26 @@ using namespace std;
 
 #include "menus.h"
 
+const char *FUTBOL = "futbol";
+const char *TENIS = "tenis";
 
 
 int main(){
+
     bool estado = true;
     int opcion;
+
+ //   Cancha cancha1(1, FUTBOL);
+ //   Cancha cancha2(2, FUTBOL);
+ //   Cancha cancha3(3, FUTBOL);
+ //   Cancha cancha4(4, FUTBOL);
+ //   Cancha cancha5(5, FUTBOL);
+
+ //   Cancha cancha6(6, TENIS);
+ //   Cancha cancha7(7, TENIS);
+ //   Cancha cancha8(8, TENIS);
+ //   Cancha cancha9(9, TENIS);
+ //   Cancha cancha10(10, TENIS);
 
      while(estado){
 
@@ -42,10 +57,10 @@ int main(){
                     system("cls");
                     menu_rutina();
                     break;
-
                 case 3:
                     system("cls");
                     menu_reservas();
+                    break;
                 case 0:
                     estado = false;
                     break;

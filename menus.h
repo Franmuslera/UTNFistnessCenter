@@ -1,12 +1,16 @@
 #ifndef MENUS_H_INCLUDED
 #define MENUS_H_INCLUDED
 
-    void menu_reservas();
+    void menu_personas();
     void menu_empleados();
     void menu_socios();
-    void menu_personas();
+    void sub_menu_socios_modificar();
+    void menu_rutina();
+    void sub_menu_rutina_modificar();
+    void menu_reservas();
     void sub_menu_reservas_buscar();
     void sub_menu_reservas_mostrar();
+    void sub_menu_reservas_modificar();
 
 
     void menu_empleados(){
@@ -76,6 +80,8 @@
                 cout << "1) INSCRIPCION DE NUEVO SOCIO" << endl;
                 cout << "2) BUSCAR SOCIO POR SU NUMERO DE SOCIO" << endl;
                 cout << "3) MOSTRAR TODOS LOS SOCIOS" << endl;
+                cout << "4) BAJA SOCIO" << endl;
+                cout << "5) MODIFICAR SOCIO" << endl;
                 cout << "0) VOLVER AL MENU ANTERIOR" << endl;
                 cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
                 cout << "INGRESE UNA OPCION: ";
@@ -98,6 +104,12 @@
                         mostrar_todos_los_socios();
                         system("pause");
                         break;
+                    case 4:
+                        baja_socio();
+                        break;
+                    case 5:
+                        sub_menu_socios_modificar();
+                        break;
                     case 0:
                         en_curso = false;
                         break;
@@ -119,7 +131,7 @@
             cout << "- - - - - - - MENU GESTION SOCIOS Y EMPLEADOS - - - - - - - -" << endl;
             cout << "1) GESTION DE SOCIOS" << endl;
             cout << "2) GESTION DE EMPLEADOS" << endl;
-            cout << "0) CERRAR PROGRAMA" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
             cin >> opcion;
@@ -157,6 +169,7 @@
             cout << "3) BUSCAR RUTINA" << endl;
             cout << "4) MOSTRAR RUTINAS" << endl;
             cout << "5) ASIGNACION DE RUTINA A CLIENTE" << endl;
+            cout << "6) MODIFICAR RUTINA" << endl;
             cout << "0) VOLVER AL MENU ANTERIOR" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -165,7 +178,6 @@
             switch(opcion){
                 case 1:
                     alta_rutina();
-                    system("pause");
                     break;
                 case 2:
                     system("cls");
@@ -179,7 +191,11 @@
                     break;
                 case 4:
                     system("cls");
-                    cout << "COMO DESEA VER EL ORDEN DE LAS RUTINAS ( 1 - POR NUMERO DE RUTINA / 2 - POR NIVEL DE RUTINA / 3 - POR TIPO DE RUTINA): ";
+                    cout << "COMO DESEA VER EL ORDEN DE LAS RUTINAS";
+                    cout << endl << "1) - POR NUMERO DE RUTINA ";
+                    cout << endl << "2) - POR NIVEL DE RUTINA ";
+                    cout << endl << "3) - POR TIPO DE RUTINA ";
+                    cout << endl << "OPCION: ";
                     cin >> opcion_mostrar;
                     system("cls");
                     switch(opcion_mostrar){
@@ -222,6 +238,9 @@
                             break;
                     }
                     break;
+                case 6:
+                    sub_menu_rutina_modificar();
+                    break;
                 case 0:
                     estado = false;
                     break;
@@ -242,6 +261,8 @@
                 cout << "1) CARGAR RESERVA" << endl;
                 cout << "2) BUSCAR RESERVAS" << endl;
                 cout << "3) MOSTRAR RESERVAS" << endl;
+                cout << "4) ELIMINAR RESERVA" << endl;
+                cout << "5) MODIFICAR RESERVA" << endl;
                 cout << "0) VOLVER AL MENU ANTERIOR" << endl;
                 cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
                 cout << "INGRESE UNA OPCION: ";
@@ -258,6 +279,12 @@
                     case 3:
                         sub_menu_reservas_mostrar();
                         break;
+                    case 4:
+                        baja_reserva();
+                        break;
+                    case 5:
+                        sub_menu_reservas_modificar();
+                        break;
                     case 0:
                         en_curso = false;
                         break;
@@ -272,7 +299,7 @@
     void sub_menu_reservas_buscar(){
         system("cls");
         int opcion, nReserva, nSocio, nCancha;
-        cout << "- - - - - - - MENU BUSCAR RESERVAS - - - - - - - -" << endl;
+        cout << "- - - - - - - SUB MENU BUSCAR RESERVAS - - - - - - - -" << endl;
         cout << "1) BUSCAR RESERVAS POR NUMERO DE SOCIO" << endl;
         cout << "2) BUSCAR RESERVAS POR NUMERO DE CANCHA" << endl;
         cout << "3) BUSCAR RESERVAS POR NUMERO DE RESERVA" << endl;
@@ -286,6 +313,8 @@
                 cout << "INGRESE EL NUMERO DE SOCIO: ";
                 cin >> nSocio;
                 buscar_reservas_x_nroSocio(nSocio);
+                cout << "presione una tecla para continuar";
+                system("pause>nul");
                 break;
             case 2:
                 cout << "INGRESE EL NUMERO DE CANCHA: ";
@@ -311,7 +340,7 @@
     void sub_menu_reservas_mostrar(){
         system("cls");
         int opcion, nCancha;
-        cout << "- - - - - - - MENU MOSTRAR RESERVAS - - - - - - - - - - - - -" << endl;
+        cout << "- - - - - - - SUB MENU MOSTRAR RESERVAS - - - - - - - - - - - - -" << endl;
         cout << "1) MOSTRAR RESERVAS ORDENADAS POR NUMERO DE RESERVA" << endl;
         cout << "2) MOSTRAR RESERVAS POR NUMERO DE CANCHA" << endl;
         cout << "3) MOSTRAR TODAS LAS RESERVAS ORDENADAS POR NUMERO DE CANCHA" << endl;
@@ -335,6 +364,113 @@
                 break;
             case 3:
                 mostrar_todas_las_reservas();
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void sub_menu_socios_modificar(){
+        system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR SOCIO - - - - - - -" << endl;
+        cout << "1) MODIFICAR NOMBRE" << endl;
+        cout << "2) MODIFICAR APELLIDO" << endl;
+        cout << "3) MODIFICAR DNI" << endl;
+        cout << "4) MODIFICAR EMAIL" << endl;
+        cout << "5) MODIFICAR DIRECCION" << endl;
+        cout << "6) MODIFICAR SEXO" << endl;
+        cout << "7) MODIFICAR TELEFONO" << endl;
+        cout << "8) MODIFICAR FECHA DE NACIMIENTO" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                modificar_nombre_socio();
+                break;
+            case 2:
+                modificar_apellido_socio();
+                break;
+            case 3:
+                modificar_dni_socio();
+                break;
+            case 4:
+                modificar_email_socio();
+                break;
+            case 5:
+                modificar_direccion_socio();
+                break;
+            case 6:
+                modificar_sexo_socio();
+                break;
+            case 7:
+                modificar_telefono_socio();
+                break;
+            case 8:
+                modificar_fecha_nacimiento_socio();
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void sub_menu_reservas_modificar(){
+        system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR RESERVA - - - - - - -" << endl;
+        cout << "1) MODIFICAR FECHA" << endl;
+        cout << "2) MODIFICAR NUMERO DE CANCHA" << endl;
+        cout << "3) MODIFICAR DURACION" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                modificar_fecha_reserva();
+                break;
+            case 2:
+                modificar_cancha_reserva();
+                break;
+            case 3:
+                modificar_duracion_reserva();
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void sub_menu_rutina_modificar(){
+         system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR RUTINA - - - - - - -" << endl;
+        cout << "1) MODIFICAR DURACION" << endl;
+        cout << "2) MODIFICAR TIPO" << endl;
+        cout << "3) MODIFICAR NIVEL" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                modificar_duracion_rutina();
+                break;
+            case 2:
+                modificar_tipo_de_rutina();
+                break;
+            case 3:
+                modificar_nivel_de_rutina();
                 break;
             case 0:
                 break;

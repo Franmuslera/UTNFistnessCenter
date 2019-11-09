@@ -255,10 +255,12 @@ class Empleado :
     void mostrar_todos_los_empleados(){
         FILE *p;
         p = fopen(FILE_EMPLEADOS,"rb");
+
         if(p==NULL){
             cout << "NO SE PUDO ABRIR LA BASE DE DATOS" << endl;
             return;
         }
+
         Empleado reg;
         cout << "EMPLEADOS: " << endl;
         cout << "______________________________________________________________________" << endl;
@@ -268,6 +270,7 @@ class Empleado :
                 reg.mostrar();
             }
         }
+
         fseek(p, 0, 0);
         cout << "______________________________________________________________________" << endl;
         cout << endl << "                      ENTRENADORES" << endl;
@@ -276,6 +279,7 @@ class Empleado :
                 reg.mostrar();
             }
         }
+
         fseek(p, 0, 0);
         cout << "______________________________________________________________________" << endl;
         cout << endl << "                      LIMPIEZA" << endl;

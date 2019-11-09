@@ -20,7 +20,7 @@
 
 1571873546 d:\utn fitness center\utn_fitness_center\menus.h
 
-1572916689 source:d:\utn fitness center\utn_fitness_center\utnfistnesscenter\main.cpp
+1573339197 source:d:\utn fitness center\utn_fitness_center\utnfistnesscenter\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
@@ -37,19 +37,19 @@
 	"reservaDeCancha.h"
 	"menus.h"
 
-1571938505 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\persona.h
+1573333585 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\persona.h
 
-1572902145 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\socio.h
+1573326952 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\socio.h
 
-1572537482 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\empleado.h
+1573320276 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\empleado.h
 
-1572988747 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\menus.h
+1573339635 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\menus.h
 
-1572913276 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina.h
+1573339356 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina.h
 
 1572901340 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina_por_cliente.h
 
-1572913479 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\cancha.h
+1573127626 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\cancha.h
 
-1572988925 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\reservadecancha.h
+1573333339 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\reservadecancha.h
 
