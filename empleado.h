@@ -23,6 +23,9 @@ class Empleado :
         void mostrar();
         void cargar();
         bool grabarEnDisco();
+        void modificar_de_disco(int pos);
+        bool leerDeDisco(int pos);
+
     };
 
 
@@ -109,6 +112,29 @@ class Empleado :
         fwrite(this, sizeof *this, 1, p);
         fclose(p);
         return true;
+    }
+
+    bool Empleado::leerDeDisco(int pos){
+        FILE *p;
+        p = fopen(FILE_EMPLEADOS, "rb");
+        if(p==NULL) return false;
+        if(pos==-1)return false;
+        int x;
+        fseek(p, pos*sizeof*this,0);
+        x = fread(this, sizeof(Empleado), 1, p);
+        fclose(p);
+        if(x){
+            return true;
+        } else return false;
+    }
+
+    void Empleado::modificar_de_disco(int pos){
+        FILE *p;
+        p = fopen(FILE_EMPLEADOS, "rb+");
+        if(p==NULL){cout<<"ERROR DE ARCHIVO";exit(1);}
+        fseek(p,pos*sizeof *this,0);
+        fwrite(this,sizeof *this,1,p);
+        fclose(p);
     }
 
 
@@ -228,6 +254,27 @@ class Empleado :
         return reg;
     }
 
+    bool buscar_empleado_x_nro_y_tipo(int numeroDeEmpleado,const char* tipoEmpleado){
+        FILE *p;
+        Empleado reg;
+        p = fopen(FILE_EMPLEADOS, "rb");
+        if(p == NULL) {
+            system("cls");
+            cout << "NO SE PUDO ABRIR EL ARCHIVO" << endl;
+            return false;
+                }
+        while(fread(&reg, sizeof(Empleado), 1, p)){
+            if (reg.getNroEmpleado() == numeroDeEmpleado && strcmp(reg.getTipoDeEmpleado(),tipoEmpleado)){
+                fclose(p);
+                return true;
+            }
+        }
+        fclose(p);
+        return false;
+    }
+
+
+
     void alta_empleado(){
         Empleado reg;
         system("cls");
@@ -266,7 +313,7 @@ class Empleado :
         cout << "______________________________________________________________________" << endl;
         cout << "                      ADMINISTRATIVOS" << endl;
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            if(strcmp(reg.getTipoDeEmpleado(),ADMINISTRATIVO)==0){
+            if(strcmp(reg.getTipoDeEmpleado(),ADMINISTRATIVO)==0 && reg.getEstado()==true){
                 reg.mostrar();
             }
         }
@@ -275,7 +322,7 @@ class Empleado :
         cout << "______________________________________________________________________" << endl;
         cout << endl << "                      ENTRENADORES" << endl;
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            if(strcmp(reg.getTipoDeEmpleado(),ENTRENADOR)==0){
+            if(strcmp(reg.getTipoDeEmpleado(),ENTRENADOR)==0 && reg.getEstado()==true){
                 reg.mostrar();
             }
         }
@@ -284,7 +331,7 @@ class Empleado :
         cout << "______________________________________________________________________" << endl;
         cout << endl << "                      LIMPIEZA" << endl;
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            if(strcmp(reg.getTipoDeEmpleado(),LIMPIEZA)==0){
+            if(strcmp(reg.getTipoDeEmpleado(),LIMPIEZA)==0 && reg.getEstado()==true){
                 reg.mostrar();
             }
         }
@@ -300,12 +347,376 @@ class Empleado :
         Empleado reg;
         fseek(p, 0, 0);
         while(fread(&reg, sizeof(Empleado), 1, p)){
-            reg.mostrar();
+                if(reg.getEstado()==true){
+                  reg.mostrar();
             cout << endl;
+                }
+
         }
 
         fclose(p);
     }
+
+    void mostrar_empleado_x_posicion(const char* tipo){
+     FILE *p;
+        p = fopen(FILE_EMPLEADOS, "rb");
+        if(p==NULL){
+            cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
+            return;
+        }
+        Empleado reg;
+        fseek(p, 0, 0);
+        while(fread(&reg, sizeof(Empleado), 1, p)){
+           if(strcmp(reg.getTipoDeEmpleado(),tipo)){
+            reg.mostrar();
+             cout << endl;
+           }
+
+        }
+
+        fclose(p);
+    }
+
+    bool buscarEmpleadoXNro(int nro){
+        FILE *p;
+        p = fopen(FILE_EMPLEADOS, "rb");
+        if(p==NULL)return false;
+        Empleado reg;
+        while(fread(&reg, sizeof(Empleado),1 ,p)){
+            if(reg.getNroEmpleado()==nro && reg.getEstado()==true){
+                fclose(p);
+                return true;
+            }
+        }
+        fclose(p);
+        return false;
+    }
+
+
+     void baja_empleado(){
+        int nEmpleado;
+        char opcion;
+        Empleado reg;
+
+        system("cls");
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA ELIMINAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA ELIMINARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    reg.setEstado(false);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    cout << endl << "SE ELIMINO CORRECTAMENTE" << endl;
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO ELIMINACION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+
+
+    void modificar_nombre_empleado(){
+
+        char nombre_nuevo[50];
+        int nEmpleado;
+        char opcion;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl << "INGRESE EL NOMBRE NUEVO: ";
+                    cargarCadena(nombre_nuevo, 50);
+                    reg.setNombre(nombre_nuevo);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+    void modificar_apellido_empleado(){
+
+        char apellido_nuevo[50];
+        int nEmpleado;
+        char opcion;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl << "INGRESE EL APELLIDO NUEVO: ";
+                    cargarCadena(apellido_nuevo, 50);
+                    reg.setApellido(apellido_nuevo);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+    void modificar_posicion_empleado(){
+
+        char posicion_nueva[50];
+        int nEmpleado;
+        char opcion;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl <<"INGRESE UNA POSICION NUEVA (administrativo , entrenador y limpieza): ";
+                    cargarCadena(posicion_nueva, 50);
+                    while(strcmp(posicion_nueva, ADMINISTRATIVO) && strcmp(posicion_nueva, ENTRENADOR) && strcmp(posicion_nueva, LIMPIEZA)){
+                    cout << "INGRESE UNA POSICION VALIDA (administrativo , entrenador y limpieza): ";
+                    cargarCadena(posicion_nueva, 30);
+                    }
+                    reg.setTipoDeEmpleado(posicion_nueva);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+
+
+
+
+    void modificar_sexo_empleado(){
+
+        char sexo_nuevo, opcion;
+        int nEmpleado;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl << "INGRESE EL SEXO ('M' PARA MASCULINO, 'F' PARA FEMENINO Y 'O' PARA OTRO): ";
+                    cin >> sexo_nuevo;
+                    switch(sexo_nuevo){
+                        case 'M':
+                        case 'm':
+                            reg.setSexo('M');
+                            break;
+                        case 'F':
+                        case 'f':
+                            reg.setSexo('F');
+                            break;
+                        case 'O':
+                        case 'o':
+                            reg.setSexo('O');
+                            break;
+                        default:
+                            break;
+                    }
+
+                    reg.modificar_de_disco(nEmpleado -1);
+
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+    void modificar_dni_empleado(){
+        long dni_nuevo;
+        int nEmpleado;
+        char opcion;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl << "INGRESE EL DNI NUEVO: ";
+                    cin >> dni_nuevo;
+                    reg.setDni(dni_nuevo);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+    void modificar_sueldo_empleado(){
+        float sNuevo;
+        int nEmpleado;
+        char opcion;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl << "INGRESE EL SUELDO NUEVO: ";
+                    cin >> sNuevo;
+                    reg.setSueldo(sNuevo);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+    void modificar_fecha_nacimiento_empleado(){
+        int nEmpleado;
+        Fecha fNueva;
+        char opcion;
+        Empleado reg;
+
+        cout << "INGRESE EL NUMERO DEL EMPLEADO QUE DESEA MODIFICAR: ";
+        cin >> nEmpleado;
+        if(buscarEmpleadoXNro(nEmpleado)){
+            reg.leerDeDisco(nEmpleado -1);
+            reg.mostrar();
+            cout << endl << "SEGURO QUE DESEA MODIFICARLO (S/N): ";
+            cin >> opcion;
+            switch(opcion){
+                case 'S':
+                case 's':
+                    cout << endl << "INGRESE LOS DATOS DE SU FECHA DE NACIMIENTO: ";
+                    cout << endl << "DIA: ";
+                    cin >> fNueva.dia;
+                    cout << "MES: ";
+                    cin >> fNueva.mes;
+                    cout << "ANIO: ";
+                    cin >> fNueva.anio;
+                    reg.setFechaNacimiento(fNueva);
+                    reg.modificar_de_disco(nEmpleado -1);
+                    break;
+                case 'N':
+                case 'n':
+                    cout << endl << "ABORTO EDICION DE EMPLEADO" << endl;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+        }
+
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
+
 
 
 #endif // EMPLEADO_H_INCLUDED

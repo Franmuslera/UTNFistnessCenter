@@ -3,6 +3,7 @@
 
     void menu_personas();
     void menu_empleados();
+    void sub_menu_empleados_modificar();
     void menu_socios();
     void sub_menu_socios_modificar();
     void menu_rutina();
@@ -11,6 +12,8 @@
     void sub_menu_reservas_buscar();
     void sub_menu_reservas_mostrar();
     void sub_menu_reservas_modificar();
+    void menu_actividades();
+    void sub_menu_actividades_modificar();
 
 
     void menu_empleados(){
@@ -23,6 +26,8 @@
                 cout << "1) ALTA DE NUEVO EMPLEADO" << endl;
                 cout << "2) BUSCAR EMPLEADO POR DNI" << endl;
                 cout << "3) MOSTRAR TODOS LOS EMPLEADOS" << endl;
+                cout << "4) BAJA EMPLEADO" << endl;
+                cout << "5) MODIFICAR EMPLEADO" << endl;
                 cout << "0) VOLVER AL MENU ANTERIOR" << endl;
                 cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
                 cout << "INGRESE UNA OPCION: ";
@@ -44,7 +49,10 @@
                     case 3:
                         int opcion_muestra;
                         system("cls");
-                        cout << endl << "COMO DESEA VER TODOS LOS EMPLEADOS (1: MOSTRAR EMPLEADOS POR POSICION; 2: MOSTRAR EMPLEADOS POR NRO DE EMPLEADO): ";
+                        cout << endl << "COMO DESEA VER TODOS LOS EMPLEADOS: " << endl;
+                        cout << "1)MOSTRAR EMPLEADOS POR POSICION" << endl;
+                        cout << "2)MOSTRAR EMPLEADOS POR NRO DE EMPLEADO"<< endl;
+                        cout << "INGRESE UNA OPCION: ";
                         cin >> opcion_muestra;
                         system("cls");
                         switch(opcion_muestra){
@@ -60,6 +68,12 @@
                                 break;
                         }
                         break;
+                            case 4:
+                                baja_empleado();
+                                break;
+                            case 5:
+                                sub_menu_empleados_modificar();
+                                break;
                     case 0:
                         estado = false;
                         break;
@@ -371,6 +385,77 @@
                 break;
         }
     }
+        void menu_actividades(){
+        bool est = true;
+        int opcion,opcion_asignacion_act;
+
+        while(est){
+
+            cout << "- - - - - - -  GESTION ACTIVIDADES - - - - - - - -" << endl;
+            cout << "1) CARGAR ACTIVIDAD" << endl;
+            cout << "2) MOSTRAR ACTIVIDADES" << endl;
+            cout << "3) BUSCAR ACTIVIDAD POR ID" << endl;
+            cout << "4) ASIGNACION DE ACTIVIDAD A CLIENTE" << endl;
+            cout << "5) MODIFICACION DE ACTIVIDAD" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            switch(opcion){
+                case 1:
+                    system("cls");
+                    alta_actividad();
+                    system("pause");
+                    break;
+                case 2:
+                    system("cls");
+                    mostrar_todas_las_actividades();
+                    system("pause");
+                    break;
+                case 3:
+                    system("cls");
+                    buscar_actividad_x_id();
+                    system("pause");
+                    break;
+                case 4:
+                     system("cls");
+                    cout << "- - - - - - - MENU DE ASIGNACION DE ACTIVIDADES - - - - - - - -" << endl;
+                    cout << "1) ASIGNAR ACTIVIDAD A CLIENTE" << endl;
+                    cout << "2) BAJA DE ASIGNACION DE ACTIVIDAD" << endl;
+                    cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+                    cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+                    cout << "INGRESE UNA OPCION: ";
+                    cin >> opcion_asignacion_act;
+                    switch(opcion_asignacion_act){
+                        case 1:
+                            system("cls");
+                           cargarActividadXCliente();
+                            break;
+                        case 2:
+                            system("cls");
+                            bajaActividadXCliente();
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                        case 5:
+                           sub_menu_actividades_modificar();
+                           break;
+                case 0:
+                    est = false;
+                    break;
+                    default:
+                    break;
+            }
+
+            system("cls");
+
+        }
+    }
 
     void sub_menu_socios_modificar(){
         system("cls");
@@ -413,6 +498,51 @@
                 break;
             case 8:
                 modificar_fecha_nacimiento_socio();
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
+     void sub_menu_empleados_modificar(){
+        system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR EMPLEADO - - - - - - -" << endl;
+        cout << "1) MODIFICAR NOMBRE" << endl;
+        cout << "2) MODIFICAR APELLIDO" << endl;
+        cout << "3) MODIFICAR DNI" << endl;
+        cout << "4) MODIFICAR SUELDO" << endl;
+        cout << "5) MODIFICAR POSICION" << endl;
+        cout << "6) MODIFICAR SEXO" << endl;
+        cout << "7) MODIFICAR FECHA DE NACIMIENTO" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                modificar_nombre_empleado();
+                break;
+            case 2:
+                modificar_apellido_empleado();
+                break;
+            case 3:
+                modificar_dni_empleado();
+                break;
+            case 4:
+                modificar_sueldo_empleado();
+                break;
+            case 5:
+                modificar_posicion_empleado();
+                break;
+            case 6:
+                modificar_sexo_empleado();
+                break;
+            case 7:
+                modificar_fecha_nacimiento_empleado();
                 break;
             case 0:
                 break;
@@ -472,6 +602,38 @@
             case 3:
                 modificar_nivel_de_rutina();
                 break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void sub_menu_actividades_modificar(){
+        system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR ACTIVIDAD - - - - - - -" << endl;
+        cout << "1) MODIFICAR NOMBRE" << endl;
+        cout << "2) MODIFICAR ENTRENADOR" << endl;
+        cout << "3) MODIFICAR HORA" << endl;
+        cout << "4) MODIFICAR DURACION" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                modificar_nombre_actividad();
+                break;
+            case 2:
+                modificar_entrenador();
+                break;
+            case 3:
+                modificar_hora_actividad();
+                break;
+            case 4:
+                modificar_duracion_actividad();
             case 0:
                 break;
             default:

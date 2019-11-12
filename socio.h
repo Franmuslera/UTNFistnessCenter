@@ -3,6 +3,8 @@
 
 const char *FILE_SOCIOS = "socios.dat";
 
+ void buscar_actividad_x_id();
+
 
 /// - - - DECLARACION DE FUNCIONES GLOBALES - - -
 
@@ -339,7 +341,6 @@ class Socio: public Persona{
                 return;
             }
         }
-
         cout << endl << "NO HAY NADIE CON ESE NUMERO DE SOCIO" << endl;
         fclose(p);
     }

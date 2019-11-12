@@ -13,7 +13,8 @@ using namespace std;
 #include "rutina_por_cliente.h"
 #include "cancha.h"
 #include "reservaDeCancha.h"
-
+#include "actividad.h"
+#include "actividad_por_cliente.h"
 #include "menus.h"
 
 const char *FUTBOL = "futbol";
@@ -43,6 +44,7 @@ int main(){
             cout << "1) GESTION SOCIOS Y EMPLEADOS" << endl;
             cout << "2) GESTION DE RUTINAS" << endl;
             cout << "3) GESTION DE RESERVAS" << endl;
+            cout << "4) GESTION DE ACTIVIDADES" << endl;
             cout << "0) CERRAR PROGRAMA" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -61,6 +63,12 @@ int main(){
                     system("cls");
                     menu_reservas();
                     break;
+
+                case 4:
+                    system("cls");
+                    menu_actividades();
+                    break;
+
                 case 0:
                     estado = false;
                     break;
