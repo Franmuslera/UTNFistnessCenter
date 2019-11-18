@@ -640,5 +640,40 @@
                 break;
         }
     }
-
+      void menu_noticias(){
+            system("cls");
+            int opcion;
+            bool est = true;
+            while (est){
+            cout << "- - - - - - -  MENU NOTICIAS - - - - - - -" << endl;
+            cout << "1) CARGAR_NOTICIA" << endl;
+            cout << "2) MOSTRAR NOTICIAS" << endl;
+            cout << "3) BAJA NOTICIA" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+            system("cls");
+            switch(opcion){
+                case 1:
+                    alta_noticia();
+                    system("pause");
+                    break;
+                case 2:
+                    mostrar_todas_las_noticias();
+                    system("pause");
+                    break;
+                case 3:
+                   baja_noticia();
+                    system("pause");
+                    break;
+                case 0:
+                    est = false;
+                    break;
+                default:
+                    break;
+            }
+            system("cls");
+            }
+        }
 #endif // MENUS_H_INCLUDED

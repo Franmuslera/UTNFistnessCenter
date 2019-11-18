@@ -53,10 +53,11 @@
 
 1573333339 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\reservadecancha.h
 
-1573575626 source:c:\users\franmuslera\desktop\utnfistnesscenter\main.cpp
+1574091286 source:c:\users\franmuslera\desktop\utnfistnesscenter\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
+	<cctype>
 	<conio.h>
 	<cstring>
 	<stdio.h>
@@ -70,11 +71,12 @@
 	"reservaDeCancha.h"
 	"actividad.h"
 	"actividad_por_cliente.h"
+	"noticia.h"
 	"menus.h"
 
 1573561014 c:\users\franmuslera\desktop\utnfistnesscenter\persona.h
 
-1573561016 c:\users\franmuslera\desktop\utnfistnesscenter\socio.h
+1574084815 c:\users\franmuslera\desktop\utnfistnesscenter\socio.h
 
 1573566973 c:\users\franmuslera\desktop\utnfistnesscenter\empleado.h
 
@@ -84,11 +86,13 @@
 
 1573561014 c:\users\franmuslera\desktop\utnfistnesscenter\cancha.h
 
-1573561014 c:\users\franmuslera\desktop\utnfistnesscenter\reservadecancha.h
+1574005303 c:\users\franmuslera\desktop\utnfistnesscenter\reservadecancha.h
 
-1573577267 c:\users\franmuslera\desktop\utnfistnesscenter\actividad.h
+1573578035 c:\users\franmuslera\desktop\utnfistnesscenter\actividad.h
 
-1573575626 c:\users\franmuslera\desktop\utnfistnesscenter\menus.h
+1574092129 c:\users\franmuslera\desktop\utnfistnesscenter\menus.h
 
 1573575809 c:\users\franmuslera\desktop\utnfistnesscenter\actividad_por_cliente.h
+
+1574092030 c:\users\franmuslera\desktop\utnfistnesscenter\noticia.h
 

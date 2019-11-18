@@ -2,6 +2,7 @@
 using namespace std;
 #include <cstdlib>
 #include <ctime>
+#include <cctype>
 #include <conio.h>
 #include <cstring>
 #include <stdio.h>
@@ -15,6 +16,7 @@ using namespace std;
 #include "reservaDeCancha.h"
 #include "actividad.h"
 #include "actividad_por_cliente.h"
+#include "noticia.h"
 #include "menus.h"
 
 const char *FUTBOL = "futbol";
@@ -45,6 +47,7 @@ int main(){
             cout << "2) GESTION DE RUTINAS" << endl;
             cout << "3) GESTION DE RESERVAS" << endl;
             cout << "4) GESTION DE ACTIVIDADES" << endl;
+            cout << "5) GESTION DE NOTICIAS" << endl;
             cout << "0) CERRAR PROGRAMA" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -67,6 +70,11 @@ int main(){
                 case 4:
                     system("cls");
                     menu_actividades();
+                    break;
+
+                case 5:
+                    system("cls");
+                    menu_noticias();
                     break;
 
                 case 0:

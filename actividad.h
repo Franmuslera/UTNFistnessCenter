@@ -406,7 +406,7 @@ bool comparar_fechas(Fecha fecha, Fecha fechaAct){
                     break;
             }
         } else {
-            cout << "NO EXISTE UN EMPLEADO CON ESE NUMERO" << endl;
+            cout << "NO EXISTE UNA ACTIVIDAD CON ESE NUMERO" << endl;
         }
 
         cout << "presione una tecla para continuar";
