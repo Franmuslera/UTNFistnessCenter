@@ -8,6 +8,8 @@ void cargarRutinaXCliente();
 void bajaRutinaXCliente();
 int buscarPosRutinaXCliente(int, int);
 void abrirArchivo();
+void mostrar_rutinas_x_cliente(int);
+void baja_de_rutina_por_cliente_menu_cliente(int,int);
 
 
 class Rutina_x_cliente {
@@ -28,8 +30,16 @@ class Rutina_x_cliente {
         bool grabarEnDisco();
         int leerDisco(int);
         void modificar_en_disco(int pos);
+        void mostrar();
 
 };
+
+void Rutina_x_cliente::mostrar(){
+    cout << "_______________________________________" << endl;
+    buscar_rutina_x_codigo(codigo_rutina);
+    cout << "_______________________________________" << endl;
+
+}
 
 int Rutina_x_cliente::leerDisco(int pos){
     int x = 0;
@@ -175,6 +185,54 @@ void bajaRutinaXCliente(){
     }
     cout << "presione una tecla para continuar";
     system("pause>nul");
+}
+
+
+void baja_de_rutina_por_cliente_menu_cliente(int cRutina, int nCliente){
+    Rutina_x_cliente reg;
+    int pos;
+    char opcion;
+    pos = buscarPosRutinaXCliente(nCliente, cRutina);
+    if(pos!=-1){
+        reg.leerDisco(pos);
+        cout << "CONFIRMAR BAJA (S/N): ";
+        cin >> opcion;
+        switch(opcion){
+            case 'S':
+            case 's':
+                reg.setEstado(false);
+                reg.modificar_en_disco(pos);
+                cout << "BAJA DE RUTINA REALIZADA" << endl;
+                break;
+            case 'N':
+            case 'n':
+                system("cls");
+                cout << "LA BAJA SE CANCELO" << endl;
+                break;
+            default:
+                cout << "LA BAJA SE CANCELO" << endl;
+                break;
+        }
+    } else {
+        cout << "NO EXISTE LA RUTINA ASIGNADA QUE DESEA ELIMINAR" << endl;
+    }
+    cout << endl << "presione una tecla para continuar";
+    system("pause>nul");
+}
+
+void mostrar_rutinas_x_cliente(int nCliente){
+    FILE *p;
+    p = fopen(FILE_RUTINAS_POR_CLIENTES, "rb");
+    if(p==NULL){
+        cout << "NO SE PUDO ABRIR EL ARCHIVO";
+        return;
+    }
+    Rutina_x_cliente reg;
+    while(fread(&reg, sizeof(Rutina_x_cliente), 1, p)){
+        if(reg.getNumeroSocio()==nCliente && reg.getEstado()==true){
+            reg.mostrar();
+        }
+    }
 }
 
 

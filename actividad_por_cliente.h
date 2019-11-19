@@ -6,8 +6,10 @@ static char *FILE_ACTIVIDADES_POR_CLIENTES = "ActividadesXClientes.dat";
 
 void cargarActividadXCliente();
 void bajaActividadXCliente();
+void baja_actividad_por_cliente_menu_cliente(int,int);
 int buscarPosActividadXCliente(int, int);
 void abrirArchivoAct();
+void mostrar_actividades_x_nro_socio(int);
 
 
 class Actividad_x_cliente{
@@ -25,9 +27,15 @@ class Actividad_x_cliente{
         int leerDisco(int);
         void modificar_en_disco(int pos);
         void cargarActividadACliente();
-        void buscarPosActividadXCliente(int,int);
+        void mostrar();
 
 };
+
+    void Actividad_x_cliente::mostrar(){
+        cout << "_____________________________________" << endl;
+        mostrar_actividad_x_nro_actividad(idActividad);
+        cout << "_____________________________________" << endl;
+    }
 
    int Actividad_x_cliente :: getIdActividad(){
    return idActividad;
@@ -106,7 +114,7 @@ void Actividad_x_cliente::cargarActividadACliente(){
 
     abrirArchivoAct();
 
-    if(buscarPosRutinaXCliente(nroCliente,idActividad)!=-1){
+    if(buscarPosActividadXCliente(nroCliente,idActividad)!=-1){
         cout << "EL CLIENTE YA TIENE ESTA ASIGNADO A ESTA ACTIVIDAD" << endl;
         return;
     }
@@ -187,6 +195,55 @@ void bajaActividadXCliente(){
     }
     cout << "presione una tecla para continuar";
     system("pause>nul");
+}
+
+void baja_actividad_por_cliente_menu_cliente(int nSocio, int cActividad){
+    Actividad_x_cliente reg;
+    int pos;
+    char opcion;
+    pos = buscarPosActividadXCliente(nSocio, cActividad);
+    if(pos!=-1){
+        reg.leerDisco(pos);
+        cout << "CONFIRMAR BAJA (S/N): ";
+        cin >> opcion;
+        switch(opcion){
+            case 'S':
+            case 's':
+                reg.setEstado(false);
+                reg.modificar_en_disco(pos);
+                cout << "BAJA DE ACTIVIDAD REALIZADA" << endl;
+                break;
+            case 'N':
+            case 'n':
+                system("cls");
+                cout << "LA BAJA SE CANCELO" << endl;
+                break;
+            default:
+                cout << "LA BAJA SE CANCELO" << endl;
+                break;
+        }
+    } else {
+        cout << "NO EXISTE LA ACTIVIDAD ASIGNADA QUE DESEA ELIMINAR" << endl;
+    }
+    cout << "presione una tecla para continuar";
+    system("pause>nul");
+}
+
+void mostrar_actividades_x_nro_socio(int nSocio){
+    FILE *p;
+    p = fopen(FILE_ACTIVIDADES_POR_CLIENTES, "rb");
+    if(p==NULL){
+        cout << endl << "NO SE PUDO ABRIR EL ARCHIVO" << endl;
+        return;
+    }
+    Actividad_x_cliente reg;
+    while(fread(&reg, sizeof(Actividad_x_cliente), 1, p)){
+        if(reg.getNroCliente()==nSocio && reg.getEstado()==true){
+            if(buscarActividadXNro(reg.getIdActividad())){
+                reg.mostrar();
+            }
+        }
+    }
 }
 
 #endif // ACTIVIDAD_POR_CLIENTE_H_INCLUDED

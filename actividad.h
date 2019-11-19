@@ -26,7 +26,6 @@ class Actividad {
     void setFecha(Fecha);
     void setNombreActividad(char*);
     void setEstado(bool);
-    //Actividad(int,int,int,Fecha,char*);
     void mostrarHoraActividad();
     bool grabarEnDisco();
     int leerDeDisco(int);
@@ -87,14 +86,6 @@ class Actividad {
       void Actividad::mostrarHoraActividad(){
          cout << fAct.hora << "hs.";
     }
-
-     /*Actividad::Actividad(int id, int nE, char* n_const="",int d,Fecha f){
-     idAct = id;
-     nroEmp = nE;
-     strcpy(nombreAct,n_const);
-     duracion = d;
-     fAct = f;
-     }*/
 
      bool Actividad::grabarEnDisco(){
     FILE *p;
@@ -217,7 +208,7 @@ class Actividad {
         if(p==NULL)return false;
         Actividad reg;
         while(fread(&reg, sizeof(Actividad),1 ,p)){
-            if(reg.getIdActividad()==nro && reg.getEstado()==true){
+            if(reg.getIdActividad()==nro && reg.getEstado()==true && es_mayor_o_igual_a_la_fecha_actual(reg.getFechaActividad())){
                 fclose(p);
                 return true;
             }
@@ -226,47 +217,34 @@ class Actividad {
         return false;
     }
 
-
-
-   /*  void baja_actividad(int nActividad){
-        Fecha fecha_act,fecha_a;
-        int idActividad;
-        fecha_act = fecha_sistema();
-
+    void mostrar_actividad_x_nro_actividad(int nActividad){
         FILE *p;
         p = fopen(FILE_ACTIVIDADES, "rb");
-        if(p==NULL){
-            cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
-            return;
-        }
+        if(p==NULL)return;
         Actividad reg;
-        while (fread(&reg, sizeof(Actividad),1,p)){
-                fecha_a = reg.getFechaActividad();
-        if (reg.getEstado() == true && fecha_a.hora < fecha_act.hora){
-
-                    idActividad = reg.getIdActividad();
-                    reg.setEstado(false);
-                    reg.modificar_en_disco(idActividad-1);
-
-
+        while(fread(&reg, sizeof(Actividad),1 ,p)){
+            if(reg.getIdActividad()==nActividad && reg.getEstado()==true && es_mayor_o_igual_a_la_fecha_actual(reg.getFechaActividad())){
+                reg.mostrarActividad();
+                fclose(p);
+                return;
+            }
         }
         fclose(p);
-}
-}*/
+    }
 
 
 
    void Actividad::mostrarActividad(){
-       Empleado reg;
-       reg= buscar_empleado_x_nro_empleado(nroEmp);
-    cout << endl << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
-    cout << "ID ACTIVIDAD: " << idAct << endl;
-    cout << "NOMBRE DE ACTIVIDAD: " << nombreAct << endl;
-    cout << "NOMBRE ENTRENADOR: " << reg.getNombre() << " "<< reg.getApellido() << endl;
-    cout << "DURACION DE ACTIVIDAD: " << duracion << " HS."<< endl;
-    cout << "HORA DE ACTIVIDAD: " ;
-    mostrarHoraActividad() ;
-    cout << endl << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        Empleado reg;
+        reg = buscar_empleado_x_nro_empleado(nroEmp);
+        cout << endl << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "ID ACTIVIDAD: " << idAct << endl;
+        cout << "NOMBRE DE ACTIVIDAD: " << nombreAct << endl;
+        cout << "NOMBRE ENTRENADOR: " << reg.getNombre() << " " << reg.getApellido() << endl;
+        cout << "DURACION DE ACTIVIDAD: " << duracion << " HS."<< endl;
+        cout << "HORA DE ACTIVIDAD: " ;
+        mostrarHoraActividad();
+        cout << endl << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
 }
 
 
@@ -276,32 +254,29 @@ bool comparar_fechas(Fecha fecha, Fecha fechaAct){
         return true;
      }
      return false;
-
 }
+
   void mostrar_todas_las_actividades(){
-      Fecha fecha_act,fechaActividad;
+    Fecha fecha_act;
 
     fecha_act = fecha_sistema();
     int idActividad;
-        FILE *p;
-        Actividad reg;
-        p = fopen(FILE_ACTIVIDADES, "rb");
-        if(p==NULL){
-            cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
-            return;
-        }
-        cout << "ACTIVIDADES DEL DIA "<< fecha_act.dia << "/"<< fecha_act.mes << "/"<< fecha_act.anio << endl;
-        while(fread(&reg, sizeof(Actividad), 1, p)){
-
-                baja_actividades();
-
-             if(reg.getEstado()== true ){
-            reg.mostrarActividad();
-           }
-
-        }
-        fclose(p);
+    FILE *p;
+    Actividad reg;
+    p = fopen(FILE_ACTIVIDADES, "rb");
+    if(p==NULL){
+        cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
         return;
+    }
+    cout << "ACTIVIDADES DEL DIA "<< fecha_act.dia << "/"<< fecha_act.mes << "/"<< fecha_act.anio << endl;
+    while(fread(&reg, sizeof(Actividad), 1, p)){
+        baja_actividades();
+        if(reg.getEstado()== true ){
+        reg.mostrarActividad();
+        }
+    }
+    fclose(p);
+    return;
   }
 
 
@@ -371,12 +346,12 @@ bool comparar_fechas(Fecha fecha, Fecha fechaAct){
             fecha_act.dia = today.tm_mday;
             fecha_act.anio = (today.tm_year + 1900);
             fecha_act.hora = today.tm_hour;
-                    return fecha_act;
+            return fecha_act;
 
         }
 
 
-        void modificar_nombre_actividad(){
+    void modificar_nombre_actividad(){
 
         char nombre_nuevo[50];
         int nActividad;

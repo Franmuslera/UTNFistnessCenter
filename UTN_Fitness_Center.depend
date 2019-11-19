@@ -20,7 +20,7 @@
 
 1571873546 d:\utn fitness center\utn_fitness_center\menus.h
 
-1573339197 source:d:\utn fitness center\utn_fitness_center\utnfistnesscenter\main.cpp
+1573741669 source:d:\utn fitness center\utn_fitness_center\utnfistnesscenter\main.cpp
 	<iostream>
 	<cstdlib>
 	<ctime>
@@ -35,19 +35,21 @@
 	"rutina_por_cliente.h"
 	"cancha.h"
 	"reservaDeCancha.h"
+	"actividad.h"
+	"actividad_por_cliente.h"
 	"menus.h"
 
 1573333585 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\persona.h
 
-1573326952 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\socio.h
+1573742474 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\socio.h
 
-1573320276 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\empleado.h
+1573742092 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\empleado.h
 
-1573339635 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\menus.h
+1574014944 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\menus.h
 
-1573339356 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina.h
+1574006503 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina.h
 
-1572901340 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina_por_cliente.h
+1574007468 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\rutina_por_cliente.h
 
 1573127626 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\cancha.h
 
@@ -94,5 +96,9 @@
 
 1573575809 c:\users\franmuslera\desktop\utnfistnesscenter\actividad_por_cliente.h
 
+1574015921 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\actividad.h
 1574092030 c:\users\franmuslera\desktop\utnfistnesscenter\noticia.h
+
+1574015869 d:\utn fitness center\utn_fitness_center\utnfistnesscenter\actividad_por_cliente.h
+
 

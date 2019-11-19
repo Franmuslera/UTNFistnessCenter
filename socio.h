@@ -3,8 +3,6 @@
 
 const char *FILE_SOCIOS = "socios.dat";
 
- void buscar_actividad_x_id();
-
 
 /// - - - DECLARACION DE FUNCIONES GLOBALES - - -
 
@@ -51,6 +49,8 @@ class Socio: public Persona{
         void modificar_de_disco(int);
 
 };
+
+Socio get_socio(int);
 
 ///- - - - - - - - - - - - GETERS - - - - - - - - -
 
@@ -178,7 +178,7 @@ class Socio: public Persona{
         cout << "ANIO: ";
         cin >> fecha_de_nacimiento.anio;
         fecha_de_nacimiento.hora = 0;
-        while(fecha_de_nacimiento.dia < 1900 && fecha_de_nacimiento.dia >  fecha_de_inicio.anio){
+        while(fecha_de_nacimiento.dia < 1900 && fecha_de_nacimiento.anio >  fecha_de_inicio.anio){
             cout << "INGRESE UN ANIO VALIDO (1900-" << fecha_de_inicio.anio <<"): ";
             cin >> fecha_de_nacimiento.dia;
         }
@@ -714,6 +714,26 @@ class Socio: public Persona{
 
         cout << "presione una tecla para continuar";
         system("pause>nul");
+    }
+
+    Socio get_socio(int nSocio){
+        FILE *p;
+        Socio reg;
+        p = fopen(FILE_SOCIOS, "rb");
+        if(p==NULL){
+            reg.setNroSocio(-10);
+            return reg;
+        }
+        while(fread(&reg, sizeof(Socio), 1, p)){
+            if(nSocio == reg.getNroSocio()){
+                fclose(p);
+                return reg;
+            }
+        }
+        fclose(p);
+        reg.setNroSocio(-10);
+        return reg;
+
     }
 
 

@@ -31,6 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="actividad.h" />
+		<Unit filename="actividad_por_cliente.h" />
 		<Unit filename="cancha.h" />
 		<Unit filename="empleado.h" />
 		<Unit filename="main.cpp" />

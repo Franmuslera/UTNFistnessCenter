@@ -28,6 +28,11 @@ class Empleado :
 
     };
 
+void mostrar_empleado_x_nro_empleado();
+int cantidad_de_empleados();
+bool existe_empleado_x_dni(long);
+Empleado buscar_empleado_x_nro_empleado(int);
+
 
     int Empleado::getNroEmpleado(){
         return nroEmpleado;
@@ -89,7 +94,7 @@ class Empleado :
     }
 
 
-    bool buscar_empleado_x_dni(long dni_buscado){
+    bool existe_empleado_x_dni(long dni_buscado){
         FILE *p;
         p  = fopen(FILE_EMPLEADOS, "rb");
         if(p == NULL)return false;
@@ -166,7 +171,7 @@ class Empleado :
 
         cout << "DNI: ";
         cin >> dni;
-        while(buscar_empleado_x_dni(dni)){
+        while(existe_empleado_x_dni(dni)){
             cout << "DNI YA EXISTENTE, INGRESE UNO QUE NO ESTE EN LA BASE DE DATOS: ";
             cin >> dni;
         }
@@ -185,22 +190,22 @@ class Empleado :
         cout << "FECHA DE NACIMIENTO: " << endl;
         cout << "DIA: ";
         cin >> fecha_de_nacimiento.dia;
-        while(fecha_de_nacimiento.dia < 1 && fecha_de_nacimiento.dia > 31){
+        while(fecha_de_nacimiento.dia < 1 || fecha_de_nacimiento.dia > 31){
             cout << "INGRESE UN DIA VALIDO (1-31): ";
             cin >> fecha_de_nacimiento.dia;
         }
         cout << "MES: ";
         cin >> fecha_de_nacimiento.mes;
-        while(fecha_de_nacimiento.mes < 1 && fecha_de_nacimiento.mes > 12){
+        while(fecha_de_nacimiento.mes < 1 || fecha_de_nacimiento.mes > 12){
             cout << "INGRESE UN MES VALIDO (1-12): ";
             cin >> fecha_de_nacimiento.mes;
         }
         cout << "ANIO: ";
         cin >> fecha_de_nacimiento.anio;
         fecha_de_nacimiento.hora = 0;
-        while(fecha_de_nacimiento.dia < 1900 && fecha_de_nacimiento.dia >  fecha_de_inicio.anio){
+        while(fecha_de_nacimiento.anio < 1900 || fecha_de_nacimiento.anio >  fecha_de_inicio.anio){
             cout << "INGRESE UN ANIO VALIDO (1900-" << fecha_de_inicio.anio <<"): ";
-            cin >> fecha_de_nacimiento.dia;
+            cin >> fecha_de_nacimiento.anio;
         }
 
         //VALIDAR SUELDO
@@ -214,17 +219,41 @@ class Empleado :
 
         //VALIDAR POSICION
 
-        cout << "INGRESE LA POSICION DEL EMPLEADO: ";
-        cargarCadena(tipo_de_empleado, 30);
-        while(strcmp(tipo_de_empleado, ADMINISTRATIVO) && strcmp(tipo_de_empleado, ENTRENADOR) && strcmp(tipo_de_empleado, LIMPIEZA)){
-            cout << "INGRESE UNA POSICION VALIDA (administrativo , entrenador y limpieza): ";
-            cargarCadena(tipo_de_empleado, 30);
+        int opcion_pos;
+        bool estado_pos = true;
+
+        while(estado_pos){
+
+            cout << "INGRESE LA POSICION DEL EMPLEADO: ";
+            cout << endl << "1) ADMINISTRATIVO";
+            cout << endl << "2) ENTRENADOR";
+            cout << endl << "3) LIMPIEZA";
+            cout << endl << "OPCION: ";
+            cin >> opcion_pos;
+            switch(opcion_pos){
+                case 1:
+                    strcpy(tipo_de_empleado, ADMINISTRATIVO);
+                    estado_pos = false;
+                    break;
+                case 2:
+                    strcpy(tipo_de_empleado, ENTRENADOR);
+                    estado_pos = false;
+                    break;
+                case 3:
+                    strcpy(tipo_de_empleado, LIMPIEZA);
+                    estado_pos = false;
+                    break;
+                default:
+                    cout << endl << "INGRESE UNA OPCION VALIDA" << endl;
+                    break;
+            }
         }
 
         nroEmpleado = (cantidad_de_empleados() + 1);
 
         if(grabarEnDisco()){
             system("cls");
+            cout << "NUMERO DE EMPLEADO : " << nroEmpleado;
             cout << endl << "EMPLEADO GRABADO CON EXITO EN EL DISCO" << endl;
         } else {
             system("cls");
@@ -281,7 +310,7 @@ class Empleado :
         reg.cargar();
     }
 
-    void buscar_empleado_x_dni(int dni_empleado){
+    void buscar_empleado_x_dni(long dni_empleado){
         FILE *p;
         p = fopen(FILE_EMPLEADOS, "rb");
         if(p==NULL){
@@ -621,8 +650,13 @@ class Empleado :
                 case 's':
                     cout << endl << "INGRESE EL DNI NUEVO: ";
                     cin >> dni_nuevo;
-                    reg.setDni(dni_nuevo);
-                    reg.modificar_de_disco(nEmpleado -1);
+                    if(existe_empleado_x_dni(dni_nuevo)){
+                        reg.setDni(dni_nuevo);
+                        reg.modificar_de_disco(nEmpleado -1);
+                    } else {
+                        cout << endl << "EL DNI YA EXISTE, INTENTE NUEVAMENTE CON UNO DIFERENTE";
+                    }
+
                     break;
                 case 'N':
                 case 'n':
@@ -692,14 +726,33 @@ class Empleado :
                 case 'S':
                 case 's':
                     cout << endl << "INGRESE LOS DATOS DE SU FECHA DE NACIMIENTO: ";
-                    cout << endl << "DIA: ";
+                    cout << "FECHA DE NACIMIENTO: " << endl;
+
+                    cout << "DIA: ";
                     cin >> fNueva.dia;
+                    while(fNueva.dia < 1 || fNueva.dia > 31){
+                        cout << "INGRESE UN DIA VALIDO (1-31): ";
+                        cin >> fNueva.dia;
+                    }
+
                     cout << "MES: ";
                     cin >> fNueva.mes;
+                    while(fNueva.mes < 1 || fNueva.mes > 12){
+                        cout << "INGRESE UN MES VALIDO (1-12): ";
+                        cin >> fNueva.mes;
+                    }
+
                     cout << "ANIO: ";
                     cin >> fNueva.anio;
+                    fNueva.hora = 0;
+                    while(fNueva.dia < 1900 || fNueva.dia >  fNueva.anio){
+                        cout << "INGRESE UN ANIO VALIDO (1900-" << fNueva.anio <<"): ";
+                        cin >> fNueva.dia;
+                    }
+
                     reg.setFechaNacimiento(fNueva);
                     reg.modificar_de_disco(nEmpleado -1);
+
                     break;
                 case 'N':
                 case 'n':
@@ -715,6 +768,20 @@ class Empleado :
         cout << "presione una tecla para continuar";
         system("pause>nul");
     }
+
+    void mostrar_empleado_x_nro_empleado(){
+        Empleado reg;
+        int nroEmpleado;
+        cout << "INGRESE EL NUMERO DE EMPLEADO: ";
+        cin >> nroEmpleado;
+        reg = buscar_empleado_x_nro_empleado(nroEmpleado);
+        if(reg.getNroEmpleado()==nroEmpleado){
+            reg.mostrar();
+        }
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
+
 
 
 

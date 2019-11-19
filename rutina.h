@@ -25,8 +25,6 @@ void mostrar_rutinas_x_tipos();
 void alta_rutina();
 
 
-
-
 class Rutina {
     protected:
         int codigo_rutina, duracion_minutos;
@@ -255,8 +253,6 @@ bool buscar_rutina_x_codigo(int codigo){
     while(fread(&reg, sizeof(Rutina), 1, p)){
         if(reg.getCodigoRutina()==codigo){
             reg.mostrarRutina();
-            cout << "presione una tecla para continuar";
-            system("pause>nul");
             fclose(p);
             return true;
         }

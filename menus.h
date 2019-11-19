@@ -4,6 +4,7 @@
     void menu_personas();
     void menu_empleados();
     void sub_menu_empleados_modificar();
+    void sub_menu_empleados_buscar();
     void menu_socios();
     void sub_menu_socios_modificar();
     void menu_rutina();
@@ -14,6 +15,238 @@
     void sub_menu_reservas_modificar();
     void menu_actividades();
     void sub_menu_actividades_modificar();
+    void menu_principal();
+    void menu_principal_entrenadores();
+    void menu_principal_limpieza();
+    void menu_principal_socios();
+    void sub_menu_principal_socios_rutinas();
+    void sub_menu_principal_socios_actividades();
+    void menu_login();
+
+    void menu_login(){
+        int opcion, nSocio, nEmpleado;
+        Empleado reg;
+        bool estado = true;
+
+        while(estado){
+            cout << "- - - - - MENU LOGIN - - - - - -" << endl;
+            cout << "1) MENU SOCIOS" << endl;
+            cout << "2) MENU EMPLEADOS" << endl;
+            cout << "0) SALIR DEL PROGRAMA" << endl;
+            cout << "- - - - - - - - - - - - - - - - " << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+
+                    cout << "INGRESE SU NUMERO DE SOCIO: ";
+                    cin >> nSocio;
+
+                    if(buscarSocioXNro(nSocio)){
+                        socio_actual = get_socio(nSocio);
+                        menu_principal_socios();
+                    }
+
+
+
+                    break;
+                case 2:
+
+                    cout << "INGRESE SU NUMERO DE EMPLEADO: ";
+                    cin >> nEmpleado;
+
+                    reg = buscar_empleado_x_nro_empleado(nEmpleado);
+
+                    if(reg.getNroEmpleado()!=nEmpleado){
+                        system("cls");
+                        cout << endl << "EL EMPLEADO NO EXISTE" << endl;
+                        break;
+                    }
+
+                    empleado_actual = reg;
+
+                    if(strcmp(reg.getTipoDeEmpleado(), ADMINISTRATIVO)==0){
+
+                        menu_principal();
+
+                    } else if(strcmp(reg.getTipoDeEmpleado(), ENTRENADOR)==0){
+
+                        menu_principal_entrenadores();
+
+                    } else {
+
+                        menu_principal_limpieza();
+                    }
+
+                    break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+            system("cls");
+        }
+    }
+
+    void menu_principal_socios(){
+        int opcion;
+        bool estado = true;
+
+        while(estado){
+
+
+            cout << "- - - - - - - MENU PRINCIPAL DE " << socio_actual.getNombre() << " - - - - - - - -" << endl;
+            cout << "1) VER PERFIL" << endl;
+            cout << "2) GESTIONAR RUTINAS" << endl;
+            cout << "3) GESTIONAR ACTIVIDADES" << endl;
+            cout << "4) VER MIS RESERVAS" << endl;
+            cout << "0) CERRAR SESION" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    socio_actual.mostrar();
+                    system("pause");
+                    break;
+                case 2:
+                    sub_menu_principal_socios_rutinas();
+                    break;
+                case 3:
+                    sub_menu_principal_socios_actividades();
+                    break;
+                case 4:
+                    buscar_reservas_x_nroSocio(socio_actual.getNroSocio());
+                    system("pause");
+                   break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+            system("cls");
+         }
+    }
+
+    void menu_principal_entrenadores(){
+        int opcion;
+        bool estado = true;
+
+        while(estado){
+
+            cout << "- - - MENU PRINCIPAL ENTRENADORES - - -" << endl;
+            cout << "1) VER PERFIL" << endl;
+            cout << "2) GESTIONAR RUTINAS" << endl;
+            cout << "3) GESTIONAR ACTIVIDADES" << endl;
+            cout << "0) CERRAR SESION" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+            system("cls");
+         }
+    }
+
+    void menu_principal_limpieza(){
+        int opcion;
+        bool estado = true;
+
+        while(estado){
+
+            cout << "- - - MENU PRINCIPAL LIMPIEZA - - -" << endl;
+            cout << "1) VER PERFIL" << endl;
+            cout << "2) VER NOTICIAS" << endl;
+            cout << "0) CERRAR SESION" << endl;
+            cout << "- - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+            system("cls");
+         }
+    }
+
+    void menu_principal(){
+
+        int opcion;
+        bool estado = true;
+
+        while(estado){
+
+
+            cout << "- - - - - - - MENU PRINCIPAL - - - - - - - -" << endl;
+            cout << "1) GESTION SOCIOS Y EMPLEADOS" << endl;
+            cout << "2) GESTION DE RUTINAS" << endl;
+            cout << "3) GESTION DE RESERVAS" << endl;
+            cout << "4) GESTION DE ACTIVIDADES" << endl;
+            cout << "0) CERRAR PROGRAMA" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            switch(opcion){
+                case 1:
+                    system("cls");
+                    menu_personas();
+                    break;
+                case 2:
+                    system("cls");
+                    menu_rutina();
+                    break;
+                case 3:
+                    system("cls");
+                    menu_reservas();
+                    break;
+
+                case 4:
+                    system("cls");
+                    menu_actividades();
+                    break;
+
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+            system("cls");
+         }
+    }
 
 
     void menu_empleados(){
@@ -24,7 +257,7 @@
             while(estado){
                 cout << "- - - - - - - MENU DE EMPLEADOS - - - - - - - -" << endl;
                 cout << "1) ALTA DE NUEVO EMPLEADO" << endl;
-                cout << "2) BUSCAR EMPLEADO POR DNI" << endl;
+                cout << "2) BUSCAR EMPLEADO" << endl;
                 cout << "3) MOSTRAR TODOS LOS EMPLEADOS" << endl;
                 cout << "4) BAJA EMPLEADO" << endl;
                 cout << "5) MODIFICAR EMPLEADO" << endl;
@@ -41,10 +274,7 @@
                         break;
                     case 2:
                         system("cls");
-                        cout << "INGRESE EL DNI DEL EMPLEADO QUE DESEA BUSCAR: ";
-                        cin >> nroDni;
-                        buscar_empleado_x_dni(nroDni);
-                        system("pause");
+                        sub_menu_empleados_buscar();
                         break;
                     case 3:
                         int opcion_muestra;
@@ -55,6 +285,7 @@
                         cout << "INGRESE UNA OPCION: ";
                         cin >> opcion_muestra;
                         system("cls");
+
                         switch(opcion_muestra){
                             case 1:
                                 mostrar_todos_los_empleados();
@@ -67,13 +298,13 @@
                             default:
                                 break;
                         }
+
+                    case 4:
+                        baja_empleado();
                         break;
-                            case 4:
-                                baja_empleado();
-                                break;
-                            case 5:
-                                sub_menu_empleados_modificar();
-                                break;
+                    case 5:
+                        sub_menu_empleados_modificar();
+                        break;
                     case 0:
                         estado = false;
                         break;
@@ -82,7 +313,105 @@
                 }
                 system("cls");
             }
+    }
+
+    void sub_menu_principal_socios_rutinas(){
+
+        int opcion, cRutina;
+        bool estado = true;
+
+        while(estado){
+
+            cout << "- - - MENU GESTION RUTINAS - - -" << endl;
+            cout << "1) VER TODAS LAS RUTINAS" << endl;
+            cout << "2) GUARDAR RUTINA" << endl;
+            cout << "3) DAR DE BAJA RUTINA" << endl;
+            cout << "4) VER MIS RUTINAS" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - -" << endl;
+            cout << "OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    mostrar_rutinas_x_tipos();
+                    cout << endl << "presione una tecla para continuar";
+                    system("pause>nul");
+                    break;
+                case 2:
+                    cargarRutinaXCliente();
+                    break;
+                case 3:
+                    cout << "INGRESE EL CODIGO DE LA RUTINA QUE DESEA ELIMINAR: ";
+                    cin >> cRutina;
+                    baja_de_rutina_por_cliente_menu_cliente(cRutina, socio_actual.getNroSocio());
+                    break;
+                case 4:
+                    mostrar_rutinas_x_cliente(socio_actual.getNroSocio());
+                    cout << endl << "presione una tecla para continuar";
+                    system("pause>nul");
+                    break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+        system("cls");
         }
+
+    }
+
+    void sub_menu_principal_socios_actividades(){
+
+        int opcion, cActividad;
+        bool estado = true;
+
+        while(estado){
+
+            cout << "- - - MENU GESTION ACTIVIDADES - - -" << endl;
+            cout << "1) VER TODAS LAS ACTIVIDADES" << endl;
+            cout << "2) GUARDAR ACTIVIDAD" << endl;
+            cout << "3) DAR DE BAJA ACTIVIDAD" << endl;
+            cout << "4) VER MIS ACTIVIDADES" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - -" << endl;
+            cout << "OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    mostrar_todas_las_actividades();
+                    cout << endl << "presione una tecla para continuar";
+                    system("pause>nul");
+                    break;
+                case 2:
+                    cargarActividadXCliente();
+                    break;
+                case 3:
+                    cout << "INGRESE EL CODIGO DE LA ACTIVIDAD QUE DESEA ELIMINAR: ";
+                    cin >> cActividad;
+                    baja_actividad_por_cliente_menu_cliente(socio_actual.getNroSocio(), cActividad);
+                    break;
+                case 4:
+                    mostrar_actividades_x_nro_socio(socio_actual.getNroSocio());
+                    cout << endl << "presione una tecla para continuar";
+                    system("pause>nul");
+                    break;
+                case 0:
+                    estado = false;
+                    break;
+                default:
+                    break;
+            }
+
+        system("cls");
+        }
+
+    }
 
 
     void menu_socios(){
@@ -640,40 +969,36 @@
                 break;
         }
     }
-      void menu_noticias(){
-            system("cls");
-            int opcion;
-            bool est = true;
-            while (est){
-            cout << "- - - - - - -  MENU NOTICIAS - - - - - - -" << endl;
-            cout << "1) CARGAR_NOTICIA" << endl;
-            cout << "2) MOSTRAR NOTICIAS" << endl;
-            cout << "3) BAJA NOTICIA" << endl;
-            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
-            cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
-            cout << "INGRESE UNA OPCION: ";
-            cin >> opcion;
-            system("cls");
-            switch(opcion){
-                case 1:
-                    alta_noticia();
-                    system("pause");
-                    break;
-                case 2:
-                    mostrar_todas_las_noticias();
-                    system("pause");
-                    break;
-                case 3:
-                   baja_noticia();
-                    system("pause");
-                    break;
-                case 0:
-                    est = false;
-                    break;
-                default:
-                    break;
-            }
-            system("cls");
-            }
+
+    void sub_menu_empleados_buscar(){
+        long nro_dni;
+        int nro_empleado;
+        system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR ACTIVIDAD - - - - - - -" << endl;
+        cout << "1) BUSCAR POR DNI" << endl;
+        cout << "2) BUSCAR POR NUMERO DE EMPLEADO" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                cout << "INGRESE EL NUMERO DE DNI: ";
+                cin >> nro_dni;
+                buscar_empleado_x_dni(nro_dni);
+                cout << "presione una tecla para continuar";
+                system("pause>nul");
+                break;
+            case 2:
+                mostrar_empleado_x_nro_empleado();
+                break;
+            case 0:
+                break;
+            default:
+                break;
         }
+    }
+
 #endif // MENUS_H_INCLUDED
