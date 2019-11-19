@@ -9,22 +9,17 @@
 	</File>
 	<File name="actividad.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5761" topLine="211" />
+			<Cursor1 position="5761" topLine="195" />
 		</Cursor>
 	</File>
-	<File name="cancha.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="rutina_por_cliente.h" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="8" />
+			<Cursor1 position="1301" topLine="8" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="325" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="menus.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3843" topLine="106" />
+			<Cursor1 position="512" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="persona.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -32,32 +27,37 @@
 			<Cursor1 position="2264" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="menus.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="676" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="socio.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6774" topLine="209" />
+		</Cursor>
+	</File>
+	<File name="cancha.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="8" />
+		</Cursor>
+	</File>
 	<File name="reservaDeCancha.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="7342" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="rutina.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6890" topLine="231" />
-		</Cursor>
-	</File>
-	<File name="rutina_por_cliente.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1301" topLine="15" />
-		</Cursor>
-	</File>
 	<File name="actividad_por_cliente.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1043" topLine="14" />
+			<Cursor1 position="1043" topLine="3" />
 		</Cursor>
 	</File>
-	<File name="socio.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="rutina.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6774" topLine="234" />
+			<Cursor1 position="6890" topLine="214" />
 		</Cursor>
 	</File>
-	<Target name="Debug" top="main.cpp">
+	<Target name="Debug" top="">
 		<File name="main.cpp" />
 		<File name="actividad_por_cliente.h" />
 		<File name="actividad.h" />

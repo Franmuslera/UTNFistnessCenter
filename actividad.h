@@ -276,7 +276,6 @@ bool comparar_fechas(Fecha fecha, Fecha fechaAct){
         }
     }
     fclose(p);
-    return;
   }
 
 
@@ -504,6 +503,31 @@ bool comparar_fechas(Fecha fecha, Fecha fechaAct){
         system("pause>nul");
     }
 
+    void mostrar_actividades_x_nro_entrenador(int nEntrenador){
+        Fecha fecha_act;
+
+        fecha_act = fecha_sistema();
+        int idActividad;
+        FILE *p;
+        Actividad reg;
+        p = fopen(FILE_ACTIVIDADES, "rb");
+        if(p==NULL){
+            cout << endl << "NO SE PUDO ABRIR EL ARCHIVO, INTENTALO NUEVAMENTE." << endl;
+            cout << "presione una tecla para continuar";
+            system("pause>nul");
+            return;
+        }
+        cout << "ACTIVIDADES DEL DIA "<< fecha_act.dia << "/"<< fecha_act.mes << "/"<< fecha_act.anio << endl;
+        while(fread(&reg, sizeof(Actividad), 1, p)){
+            baja_actividades();
+            if(reg.getEstado()== true && reg.getNroEmpleado()==nEntrenador){
+            reg.mostrarActividad();
+            }
+        }
+        fclose(p);
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
+    }
 
 
 

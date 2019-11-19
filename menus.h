@@ -5,6 +5,8 @@
     void menu_empleados();
     void sub_menu_empleados_modificar();
     void sub_menu_empleados_buscar();
+    void menu_noticias();
+    void sub_menu_noticias_modificar();
     void menu_socios();
     void sub_menu_socios_modificar();
     void menu_rutina();
@@ -17,6 +19,8 @@
     void sub_menu_actividades_modificar();
     void menu_principal();
     void menu_principal_entrenadores();
+    void sub_menu_principal_entrenadores_rutinas();
+    void sub_menu_principal_entrenadores_actividades();
     void menu_principal_limpieza();
     void menu_principal_socios();
     void sub_menu_principal_socios_rutinas();
@@ -103,6 +107,7 @@
             cout << "2) GESTIONAR RUTINAS" << endl;
             cout << "3) GESTIONAR ACTIVIDADES" << endl;
             cout << "4) VER MIS RESERVAS" << endl;
+            cout << "5) VER NOTICIAS" << endl;
             cout << "0) CERRAR SESION" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -124,6 +129,9 @@
                     buscar_reservas_x_nroSocio(socio_actual.getNroSocio());
                     system("pause");
                    break;
+                case 5:
+                    mostrar_todas_las_noticias();
+                    break;
                 case 0:
                     estado = false;
                     break;
@@ -145,6 +153,7 @@
             cout << "1) VER PERFIL" << endl;
             cout << "2) GESTIONAR RUTINAS" << endl;
             cout << "3) GESTIONAR ACTIVIDADES" << endl;
+            cout << "4) MOSTRAR NOTICIAS" << endl;
             cout << "0) CERRAR SESION" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
@@ -153,10 +162,17 @@
             system("cls");
             switch(opcion){
                 case 1:
+                    empleado_actual.mostrar();
+                    system("pause");
                     break;
                 case 2:
+                    sub_menu_principal_entrenadores_rutinas();
                     break;
                 case 3:
+                    sub_menu_principal_entrenadores_actividades();
+                    break;
+                case 4:
+                    mostrar_todas_las_noticias();
                     break;
                 case 0:
                     estado = false;
@@ -169,25 +185,57 @@
          }
     }
 
-    void menu_principal_limpieza(){
-        int opcion;
+    void sub_menu_principal_entrenadores_rutinas(){
+        int opcion,opcion_mostrar;
         bool estado = true;
 
         while(estado){
 
-            cout << "- - - MENU PRINCIPAL LIMPIEZA - - -" << endl;
-            cout << "1) VER PERFIL" << endl;
-            cout << "2) VER NOTICIAS" << endl;
-            cout << "0) CERRAR SESION" << endl;
-            cout << "- - - - - - - - - - - - - - - - - -" << endl;
-            cout << "INGRESE UNA OPCION: ";
+            cout << "- - - MENU GESTION RUTINAS - - -" << endl;
+            cout << "1) MOSTRAR RUTINAS" << endl;
+            cout << "2) CREAR RUTINA" << endl;
+            cout << "3) DAR DE BAJA RUTINA" << endl;
+            cout << "4) MODIFICAR RUTINAS" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - -" << endl;
+            cout << "OPCION: ";
             cin >> opcion;
 
             system("cls");
             switch(opcion){
                 case 1:
+                    system("cls");
+                    cout << "COMO DESEA VER EL ORDEN DE LAS RUTINAS";
+                    cout << endl << "1) - POR NUMERO DE RUTINA ";
+                    cout << endl << "2) - POR NIVEL DE RUTINA ";
+                    cout << endl << "3) - POR TIPO DE RUTINA ";
+                    cout << endl << "OPCION: ";
+                    cin >> opcion_mostrar;
+                    system("cls");
+                    switch(opcion_mostrar){
+                        case 1:
+                            mostrar_rutinas_x_codigo();
+                            break;
+                        case 2:
+                            mostrar_rutinas_x_niveles();
+                            break;
+                        case 3:
+                            mostrar_rutinas_x_tipos();
+                            break;
+                        default:
+                            break;
+                    }
+                    cout << "presione una tecla para continuar";
+                    system("pause>nul");
                     break;
                 case 2:
+                    alta_rutina();
+                    break;
+                case 3:
+                    baja_logica_rutina();
+                    break;
+                case 4:
+                    sub_menu_rutina_modificar();
                     break;
                 case 0:
                     estado = false;
@@ -196,8 +244,46 @@
                     break;
             }
 
+        system("cls");
+        }
+    }
+
+    void sub_menu_principal_entrenadores_actividades(){
+        bool est = true;
+        int opcion;
+
+        while(est){
+
+            cout << "- - - - - - -  GESTION ACTIVIDADES - - - - - - - -" << endl;
+            cout << "1) CARGAR ACTIVIDAD" << endl;
+            cout << "2) MOSTRAR MIS ACTIVIDADES" << endl;
+            cout << "3) MODIFICACION DE ACTIVIDAD" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
             system("cls");
-         }
+            switch(opcion){
+                case 1:
+                    alta_actividad();
+                    system("pause");
+                    break;
+                case 2:
+                    mostrar_actividades_x_nro_entrenador(empleado_actual.getNroEmpleado());
+                    break;
+                case 3:
+                    sub_menu_actividades_modificar();
+                    break;
+                case 0:
+                    est = false;
+                break;
+                default:
+                    break;
+            }
+
+            system("cls");
+
+        }
     }
 
     void menu_principal(){
@@ -213,30 +299,29 @@
             cout << "2) GESTION DE RUTINAS" << endl;
             cout << "3) GESTION DE RESERVAS" << endl;
             cout << "4) GESTION DE ACTIVIDADES" << endl;
+            cout << "5) GESTION DE NOTICIAS" << endl;
             cout << "0) CERRAR PROGRAMA" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
             cin >> opcion;
 
+            system("cls");
             switch(opcion){
                 case 1:
-                    system("cls");
                     menu_personas();
                     break;
                 case 2:
-                    system("cls");
                     menu_rutina();
                     break;
                 case 3:
-                    system("cls");
                     menu_reservas();
                     break;
-
                 case 4:
-                    system("cls");
                     menu_actividades();
                     break;
-
+                case 5:
+                    menu_noticias();
+                    break;
                 case 0:
                     estado = false;
                     break;
@@ -422,7 +507,7 @@
                 cout << "- - - - - - - MENU DE SOCIOS - - - - - - - -" << endl;
                 cout << "1) INSCRIPCION DE NUEVO SOCIO" << endl;
                 cout << "2) BUSCAR SOCIO POR SU NUMERO DE SOCIO" << endl;
-                cout << "3) MOSTRAR TODOS LOS SOCIOS" << endl;
+                cout << "3) MOSTRAR TODOS sub_menu_principal_entrenadores_rutinasLOS SOCIOS" << endl;
                 cout << "4) BAJA SOCIO" << endl;
                 cout << "5) MODIFICAR SOCIO" << endl;
                 cout << "0) VOLVER AL MENU ANTERIOR" << endl;
@@ -464,6 +549,83 @@
             }
         }
 
+    void menu_noticias(){
+        int opcion, nNoticia;
+        bool en_curso = true;
+
+        while(en_curso){
+            cout << "- - - - - - - MENU DE NOTICIAS - - - - - - - -" << endl;
+            cout << "1) CREAR NOTICIA" << endl;
+            cout << "2) ELIMINAR NOTICIA" << endl;
+            cout << "3) BUSCAR NOTICIA POR NUMERO DE NOTICIA" << endl;
+            cout << "4) VER TODAS LAS NOTICIAS" << endl;
+            cout << "5) MODIFICAR NOTICIA" << endl;
+            cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+            cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    alta_noticia();
+                    system("pause");
+                    break;
+                case 2:
+                    baja_noticia();
+                    system("pause");
+                    break;
+                case 3:
+                    cout << "INGRESE EL NUMERO DE NOTICIA QUE DESEA BUSCAR: ";
+                    cin >> nNoticia;
+                    mostrar_noticia_x_nro_noticia(nNoticia);
+                    system("pause");
+                    break;
+                case 4:
+                    mostrar_todas_las_noticias();
+                    break;
+                case 5:
+                    sub_menu_noticias_modificar();
+                    break;
+                case 0:
+                    en_curso = false;
+                    break;
+                default:
+                    break;
+            }
+
+            system("cls");
+        }
+    }
+
+    void sub_menu_noticias_modificar(){
+        system("cls");
+        int opcion;
+        cout << "- - - - - - - SUB MENU MODIFICAR NOTICIAS- - - - - - -" << endl;
+        cout << "1) MODIFICAR TITULO" << endl;
+        cout << "2) MODIFICAR DESCRIPCION" << endl;
+        cout << "3) MODIFICAR FECHA DE CADUCIDAD" << endl;
+        cout << "0) VOLVER AL MENU ANTERIOR" << endl;
+        cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+        cout << "INGRESE UNA OPCION: ";
+        cin >> opcion;
+        system("cls");
+        switch(opcion){
+            case 1:
+                modificar_titulo();
+                break;
+            case 2:
+                modificar_descripcion();
+                break;
+            case 3:
+                modificar_fecha_de_noticia();
+                break;
+            case 0:
+                break;
+            default:
+                break;
+        }
+    }
 
     void menu_personas(){
         bool estado = true;
@@ -777,7 +939,7 @@
                 case 0:
                     est = false;
                     break;
-                    default:
+                default:
                     break;
             }
 
@@ -998,6 +1160,39 @@
                 break;
             default:
                 break;
+        }
+    }
+
+    void menu_principal_limpieza(){
+        bool est = true;
+        int opcion;
+
+        while(est){
+
+            cout << "- - - MENU PRINCIPAL LIMPIEZA - - -" << endl;
+            cout << "1) VER PERFIL" << endl;
+            cout << "2) MOSTRAR NOTICIAS" << endl;
+            cout << "0) CERRAR SESION" << endl;
+            cout << "- - - - - - - - - - - - - - - - - -" << endl;
+            cout << "INGRESE UNA OPCION: ";
+            cin >> opcion;
+
+            system("cls");
+            switch(opcion){
+                case 1:
+                    empleado_actual.mostrar();
+                    system("pause");
+                    break;
+                case 2:
+                    mostrar_todas_las_noticias();
+                    break;
+                case 0:
+                    est = false;
+                    break;
+                default:
+                    break;
+            }
+            system("cls");
         }
     }
 

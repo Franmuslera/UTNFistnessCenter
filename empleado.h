@@ -32,6 +32,7 @@ void mostrar_empleado_x_nro_empleado();
 int cantidad_de_empleados();
 bool existe_empleado_x_dni(long);
 Empleado buscar_empleado_x_nro_empleado(int);
+void mostrar_fecha_con_barras(Fecha);
 
 
     int Empleado::getNroEmpleado(){
@@ -745,9 +746,9 @@ Empleado buscar_empleado_x_nro_empleado(int);
                     cout << "ANIO: ";
                     cin >> fNueva.anio;
                     fNueva.hora = 0;
-                    while(fNueva.dia < 1900 || fNueva.dia >  fNueva.anio){
+                    while(fNueva.anio < 1900 || fNueva.anio >  fNueva.anio){
                         cout << "INGRESE UN ANIO VALIDO (1900-" << fNueva.anio <<"): ";
-                        cin >> fNueva.dia;
+                        cin >> fNueva.anio;
                     }
 
                     reg.setFechaNacimiento(fNueva);
@@ -783,6 +784,9 @@ Empleado buscar_empleado_x_nro_empleado(int);
     }
 
 
+    void mostrar_fecha_con_barras(Fecha f){
+        cout << f.dia << "/" << f.mes << "/" << f.anio;
+    }
 
 
 
