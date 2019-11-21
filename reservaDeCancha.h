@@ -172,7 +172,7 @@ void buscar_reservas_x_nroSocio(int nro){
         system("cls");
         cout << "NO SE PUDO ABRIR EL ARCHIVO";
         cout<<"Presione una tecla para continuar";
-        system("pause<null");
+        system("pause>nul");
         return;
     }
     Reserva reg;
@@ -185,16 +185,14 @@ void buscar_reservas_x_nroSocio(int nro){
     }
 
     if(reservas!=0){
-        cout<<"Presione una tecla para continuar";
-        system("pause<null");
         fclose(p);
         return;
+    } else {
+        cout << "EL SOCIO NO TIENE RESERVAS ACTIVAS" << endl;
+        fclose(p);
+        cout << "presione una tecla para continuar";
+        system("pause>nul");
     }
-
-    cout << "EL SOCIO NO TIENE RESERVAS ACTIVAS" << endl;
-    fclose(p);
-    cout << "presione una tecla para continuar";
-    system("pause>nul");
 }
 
 void Reserva::cargarReserva(){

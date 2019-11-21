@@ -161,14 +161,14 @@ void bajaRutinaXCliente(){
     cin >> cRutina;
     pos = buscarPosRutinaXCliente(nSocio, cRutina);
     if(pos!=-1){
-        reg.leerDisco(pos);
+        reg.leerDisco(pos-1);
         cout << "CONFIRMAR BAJA (S/N): ";
         cin >> opcion;
         switch(opcion){
             case 'S':
             case 's':
                 reg.setEstado(false);
-                reg.modificar_en_disco(pos);
+                reg.modificar_en_disco(pos-1);
                 cout << "BAJA DE RUTINA REALIZADA" << endl;
                 break;
             case 'N':
@@ -194,14 +194,15 @@ void baja_de_rutina_por_cliente_menu_cliente(int cRutina, int nCliente){
     char opcion;
     pos = buscarPosRutinaXCliente(nCliente, cRutina);
     if(pos!=-1){
-        reg.leerDisco(pos);
+        reg.leerDisco(pos-1);
+        reg.mostrar();
         cout << "CONFIRMAR BAJA (S/N): ";
         cin >> opcion;
         switch(opcion){
             case 'S':
             case 's':
                 reg.setEstado(false);
-                reg.modificar_en_disco(pos);
+                reg.modificar_en_disco(pos-1);
                 cout << "BAJA DE RUTINA REALIZADA" << endl;
                 break;
             case 'N':

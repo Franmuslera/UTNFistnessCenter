@@ -135,7 +135,7 @@ int buscarPosActividadXCliente(int nSocio, int idActividad){
     Actividad_x_cliente reg;
     while(fread(&reg, sizeof(Actividad_x_cliente), 1,p)){
         x++;
-        if(reg.getNroCliente()==nSocio && reg.getIdActividad()==idActividad){
+        if(reg.getNroCliente()==nSocio && reg.getIdActividad()==idActividad && reg.getEstado()==true){
             return x;
         }
     }
@@ -171,14 +171,15 @@ void bajaActividadXCliente(){
     cin >> idActividad;
     pos = buscarPosActividadXCliente(nSocio, idActividad);
     if(pos!=-1){
-        reg.leerDisco(pos);
+        reg.leerDisco(pos -1);
+        reg.mostrar();
         cout << "CONFIRMAR BAJA (S/N): ";
         cin >> opcion;
         switch(opcion){
             case 'S':
             case 's':
                 reg.setEstado(false);
-                reg.modificar_en_disco(pos);
+                reg.modificar_en_disco(pos -1);
                 cout << "BAJA DE ACTIVIDAD REALIZADA" << endl;
                 break;
             case 'N':
@@ -203,14 +204,15 @@ void baja_actividad_por_cliente_menu_cliente(int nSocio, int cActividad){
     char opcion;
     pos = buscarPosActividadXCliente(nSocio, cActividad);
     if(pos!=-1){
-        reg.leerDisco(pos);
+        reg.leerDisco(pos -1);
+        reg.mostrar();
         cout << "CONFIRMAR BAJA (S/N): ";
         cin >> opcion;
         switch(opcion){
             case 'S':
             case 's':
                 reg.setEstado(false);
-                reg.modificar_en_disco(pos);
+                reg.modificar_en_disco(pos -1);
                 cout << "BAJA DE ACTIVIDAD REALIZADA" << endl;
                 break;
             case 'N':

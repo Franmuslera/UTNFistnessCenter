@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 #include <cstdlib>
 #include <ctime>
 #include <cctype>
@@ -7,6 +8,7 @@ using namespace std;
 #include <cstring>
 #include <stdio.h>
 #include <cstdio>
+
 #include "persona.h"
 #include "socio.h"
 Socio socio_actual;
@@ -18,6 +20,7 @@ Empleado empleado_actual;
 #include "reservaDeCancha.h"
 #include "actividad.h"
 #include "actividad_por_cliente.h"
+
 #include "noticia.h"
 #include "menus.h"
 

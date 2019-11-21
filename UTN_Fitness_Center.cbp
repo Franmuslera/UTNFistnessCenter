@@ -37,6 +37,7 @@
 		<Unit filename="empleado.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menus.h" />
+		<Unit filename="noticia.h" />
 		<Unit filename="persona.h" />
 		<Unit filename="reservaDeCancha.h" />
 		<Unit filename="rutina.h" />

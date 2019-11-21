@@ -276,7 +276,7 @@
                     break;
                 case 0:
                     est = false;
-                break;
+                    break;
                 default:
                     break;
             }
@@ -294,13 +294,13 @@
         while(estado){
 
 
-            cout << "- - - - - - - MENU PRINCIPAL - - - - - - - -" << endl;
+            cout << "- - - -  MENU PRINCIPAL ADMINISTRATIVO - - - -" << endl;
             cout << "1) GESTION SOCIOS Y EMPLEADOS" << endl;
             cout << "2) GESTION DE RUTINAS" << endl;
             cout << "3) GESTION DE RESERVAS" << endl;
             cout << "4) GESTION DE ACTIVIDADES" << endl;
             cout << "5) GESTION DE NOTICIAS" << endl;
-            cout << "0) CERRAR PROGRAMA" << endl;
+            cout << "0) CERRAR SESION" << endl;
             cout << "- - - - - - - - - - - - - - - - - - - - - - -" << endl;
             cout << "INGRESE UNA OPCION: ";
             cin >> opcion;
@@ -383,7 +383,7 @@
                             default:
                                 break;
                         }
-
+                        break;
                     case 4:
                         baja_empleado();
                         break;
@@ -507,7 +507,7 @@
                 cout << "- - - - - - - MENU DE SOCIOS - - - - - - - -" << endl;
                 cout << "1) INSCRIPCION DE NUEVO SOCIO" << endl;
                 cout << "2) BUSCAR SOCIO POR SU NUMERO DE SOCIO" << endl;
-                cout << "3) MOSTRAR TODOS sub_menu_principal_entrenadores_rutinasLOS SOCIOS" << endl;
+                cout << "3) MOSTRAR TODOS LOS SOCIOS" << endl;
                 cout << "4) BAJA SOCIO" << endl;
                 cout << "5) MODIFICAR SOCIO" << endl;
                 cout << "0) VOLVER AL MENU ANTERIOR" << endl;
@@ -693,6 +693,7 @@
                     cout << "INGRESE EL NUMERO DE RUTINA QUE DESEA BUSCAR: ";
                     cin >> nroRutina;
                     buscar_rutina_x_codigo(nroRutina);
+                    system("pause");
                     break;
                 case 4:
                     system("cls");
